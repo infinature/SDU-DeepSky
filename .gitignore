@@ -192,3 +192,5 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+astroyolo/best.pt
+mstar-classification-frontend/best_model_20250509_193825.pth
