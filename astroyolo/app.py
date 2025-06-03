@@ -89,42 +89,69 @@ def initialize_model(weight_path=None):
 
 def preprocess_image(image_data, image_type='npy'):
     """预处理图像数据"""
+    img_data = None
     if image_type == 'npy':
-        # 处理NPY格式数据
         if isinstance(image_data, str) and image_data.endswith('.npy'):
-            # 如果是文件路径
-            img_data = np.load(image_data)
+            img_data = np.load(image_data, allow_pickle=True)
+        elif isinstance(image_data, bytes):
+            img_data = np.load(io.BytesIO(image_data), allow_pickle=True)
+        elif isinstance(image_data, np.ndarray):
+            img_data = image_data
         else:
-            # 如果是二进制数据
-            img_data = np.load(io.BytesIO(image_data))
-        
-        # 如果是CHW格式，转换为HWC
-        if img_data.shape[0] == 3 and len(img_data.shape) == 3:
+            raise ValueError("NPY image_data is not a file path, bytes, or numpy array.")
+
+        if not isinstance(img_data, np.ndarray):
+            raise ValueError("NPY data could not be loaded as a NumPy array.")
+
+        if len(img_data.shape) == 3 and img_data.shape[0] in [1, 3]:
             img_data = np.transpose(img_data, (1, 2, 0))
+        elif len(img_data.shape) == 2:
+            img_data = np.expand_dims(img_data, axis=-1)
         
-        # 确保值范围在0-255
-        if img_data.max() <= 1.0:
-            img_data = (img_data * 255.0).astype(np.uint8)
-    else:
-        # 处理JPEG/PNG格式
-        if isinstance(image_data, str):
-            # 如果是文件路径
-            img_data = cv2.imread(image_data)
-            img_data = cv2.cvtColor(img_data, cv2.COLOR_BGR2RGB)
+        if img_data.dtype != np.uint8:
+            img_data = img_data.astype(np.float32)
+            min_val = np.min(img_data)
+            max_val = np.max(img_data)
+            if max_val > min_val:
+                img_data = (img_data - min_val) / (max_val - min_val) * 255.0
+            elif max_val == min_val and max_val > 1.0:
+                 img_data = np.full_like(img_data, 128.0 if max_val > 0 else 0.0)
+            elif max_val == min_val and max_val <=1.0 and max_val >=0:
+                 img_data = img_data * 255.0
+            else: 
+                img_data = np.zeros_like(img_data)
+            img_data = np.clip(img_data, 0, 255)
+            img_data = img_data.astype(np.uint8)
+
+        if img_data.ndim == 2 or img_data.shape[2] == 1:
+            original_img_bgr = cv2.cvtColor(img_data, cv2.COLOR_GRAY2BGR)
+        elif img_data.shape[2] == 3:
+            original_img_bgr = cv2.cvtColor(img_data, cv2.COLOR_RGB2BGR)
         else:
-            # 如果是二进制数据
+            raise ValueError(f"NPY image has unsupported shape for BGR conversion: {img_data.shape}")
+
+    elif image_type in ['jpg', 'jpeg', 'png']:
+        if isinstance(image_data, str):
+            original_img_bgr = cv2.imread(image_data)
+            if original_img_bgr is None:
+                raise ValueError(f"Could not read image file: {image_data}")
+        elif isinstance(image_data, bytes):
             nparr = np.frombuffer(image_data, np.uint8)
-            img_data = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-            img_data = cv2.cvtColor(img_data, cv2.COLOR_BGR2RGB)
+            original_img_bgr = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            if original_img_bgr is None:
+                raise ValueError("Could not decode image from bytes.")
+        else:
+            raise ValueError("Unsupported image_data type for JPG/PNG.")
+    else:
+        raise ValueError(f"Unsupported image_type: {image_type}")
     
-    # 保存原始大小
-    original_shape = img_data.shape[:2]
+    original_shape = original_img_bgr.shape[:2]
     
-    # 调整大小为模型输入尺寸
     input_size = cfg.VAL["TEST_IMG_SIZE"]
-    resized_img = cv2.resize(img_data, (input_size, input_size))
+    resized_img_bgr = cv2.resize(original_img_bgr, (input_size, input_size), interpolation=cv2.INTER_LINEAR)
+    resized_img_rgb_for_model = cv2.cvtColor(resized_img_bgr, cv2.COLOR_BGR2RGB)
     
-    return img_data, resized_img, original_shape
+    return original_img_bgr, resized_img_rgb_for_model, original_shape
 
 def detect(model, image, conf_thresh=0.3, device='cuda'):
     """使用模型检测图像中的目标"""
@@ -404,65 +431,83 @@ def process_single_image(image_data, image_type='jpg', confidence=0.3):
     """处理单张图像并返回检测结果"""
     global MODEL, DEVICE
     
-    # 确保模型已加载
     if MODEL is None:
-        initialize_model()
-        
-    # 开始处理图像
-    
+        if not initialize_model():
+             return {
+                'status': 'error',
+                'message': '模型初始化失败',
+                'boxes': [],
+                'original_image': None,
+                'result_image': None,
+                'detection_count': 0
+            }
+            
+    original_img_bgr = None
+    original_img_base64 = None
+
     try:
-        # 预处理图像
-        original_img, resized_img, original_shape = preprocess_image(image_data, image_type)
+        try:
+            original_img_bgr, resized_img_rgb_for_model, original_shape = preprocess_image(image_data, image_type)
+            _, buffer_orig = cv2.imencode('.png', original_img_bgr)
+            original_img_base64 = base64.b64encode(buffer_orig).decode('utf-8')
+        except Exception as e_preprocess:
+            print(f"图像预处理错误: {str(e_preprocess)}")
+            import traceback
+            traceback.print_exc()
+            return {
+                'status': 'error',
+                'message': f'图像预处理失败: {str(e_preprocess)}',
+                'boxes': [],
+                'original_image': None,
+                'result_image': None,
+                'detection_count': 0
+            }
+
+        boxes = detect(MODEL, resized_img_rgb_for_model, conf_thresh=confidence, device=DEVICE)
         
-        # 检测目标
-        boxes = detect(MODEL, resized_img, conf_thresh=confidence, device=DEVICE)
-        
-        # 缩放检测框回原始尺寸
         input_size = cfg.VAL["TEST_IMG_SIZE"]
         scaled_boxes = scale_boxes(boxes, original_shape, input_size)
         
-        # 获取类别名称
         class_names = cfg.Customer_DATA["CLASSES"]
+        result_img_with_boxes_bgr = draw_boxes(original_img_bgr.copy(), scaled_boxes, class_names)
         
-        # 绘制检测框
-        result_img = draw_boxes(original_img, scaled_boxes, class_names)
+        _, buffer_result = cv2.imencode('.png', result_img_with_boxes_bgr)
+        result_img_base64 = base64.b64encode(buffer_result).decode('utf-8')
         
-        # 将图像转换为base64
-        _, buffer = cv2.imencode('.png', cv2.cvtColor(result_img, cv2.COLOR_RGB2BGR))
-        result_img_base64 = base64.b64encode(buffer).decode('utf-8')
-        
-        # 将检测框转换为前端期望的格式
         formatted_boxes = []
-        for i, box in enumerate(scaled_boxes):
-            x1, y1, x2, y2, confidence, class_id = box
+        for i, box_data in enumerate(scaled_boxes):
+            x1, y1, x2, y2, conf, class_id_val = box_data
             formatted_boxes.append({
-                'id': i + 1,  # 添加ID字段从1开始
-                'confidence': confidence,
-                'x1': x1,
-                'y1': y1,
-                'x2': x2,
-                'y2': y2,
-                'class_id': class_id
+                'id': i + 1,
+                'confidence': float(conf),
+                'x1': float(x1),
+                'y1': float(y1),
+                'x2': float(x2),
+                'y2': float(y2),
+                'class_id': int(class_id_val)
             })
         
-        # 输出结果格式供调试
         print(f"返回检测框格式化结果: {formatted_boxes}")
         
-        # 准备结果
-        result = {
+        return {
             'status': 'success',
             'boxes': formatted_boxes,
+            'original_image': original_img_base64,
             'result_image': result_img_base64,
             'detection_count': len(scaled_boxes)
         }
-        
-        return result
     
-    except Exception as e:
-        print(f"处理图像时出错: {str(e)}")
+    except Exception as e_process:
+        print(f"处理图像时出错 (检测/绘制阶段): {str(e_process)}")
+        import traceback
+        traceback.print_exc()
         return {
             'status': 'error',
-            'message': str(e)
+            'message': f'图像处理失败 (检测/绘制阶段): {str(e_process)}',
+            'boxes': [],
+            'original_image': original_img_base64,
+            'result_image': original_img_base64,
+            'detection_count': 0
         }
 
 @app.route('/')

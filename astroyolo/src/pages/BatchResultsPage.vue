@@ -221,8 +221,8 @@
             <!-- 图片预览区域 -->
             <div class="col-12 col-md-8">
               <q-img
-                v-if="previewItem?.annotated_image_url"
-                :src="previewItem?.annotated_image_url"
+                v-if="previewUrl"
+                :src="previewUrl"
                 style="max-width: 100%; max-height: 80vh; object-fit: contain;"
                 spinner-color="primary"
               />
@@ -234,11 +234,11 @@
             <!-- 目标列表区域 -->
             <div class="col-12 col-md-4 q-pa-md">
               <div class="text-subtitle1 q-mb-sm">识别到的目标</div>
-              <q-list bordered separator v-if="previewItem?.detections && previewItem.detections.length > 0">
-                <q-item v-for="(det, index) in previewItem.detections" :key="index">
+              <q-list bordered separator v-if="previewItem?.boxes && previewItem.boxes.length > 0">
+                <q-item v-for="(det, index) in previewItem.boxes" :key="index">
                   <q-item-section>
-                    <q-item-label>{{ det.name }} ({{ (det.confidence * 100).toFixed(2) }}%)</q-item-label>
-                    <q-item-label caption class="text-astroyolo-text-secondary">位置: [{{ det.box.join(', ') }}]</q-item-label>
+                    <q-item-label>{{ class_names[det.class_id] || '未知类别' }} ({{ (det.confidence * 100).toFixed(2) }}%)</q-item-label>
+                    <q-item-label caption class="text-astroyolo-text-secondary">位置: [{{ [det.x1, det.y1, det.x2, det.y2].map(c => c.toFixed(2)).join(', ') }}]</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -336,6 +336,7 @@ const columns = [
 const showPreview = ref(false);
 const previewItem = ref(null);
 const previewUrl = ref('');
+const class_names = ['bhb']; // 根据后端 app.py 的 class_names
 
 // 获取任务数据
 onMounted(() => {
@@ -384,21 +385,22 @@ function calcSuccessRate() {
 
 // 预览图片
 function previewImage(item) {
-  previewItem.value = item;
-  
-  // 只使用本地缓存的数据
-  if (item.result_image && item.result_image.startsWith('data:image')) {
-    // 使用base64格式的图片数据
+  const backendBaseUrl = `${window.location.protocol}//${window.location.hostname}:5000`; // Dynamically get base URL + port 5000
+  if (item && item.result_image_path) {
+    const imagePath = item.result_image_path.startsWith('/') ? item.result_image_path : `/${item.result_image_path}`;
+    previewUrl.value = `${backendBaseUrl}${imagePath}`;
+    previewItem.value = item;
+    showPreview.value = true;
+  } else if (item && item.result_image) { // Fallback for Base64, though likely not used if path exists
     previewUrl.value = item.result_image;
-  } else if (item.boxes && item.boxes.length > 0) {
-    // 如果有盒子数据但没有图片，生成一个缓存数据占位图
-    previewUrl.value = './static/placeholder-image.png'; // 修正路径
+    previewItem.value = item;
+    showPreview.value = true;
   } else {
-    // 如果没有缓存的图像，显示一个错误占位图
-    previewUrl.value = './static/no-result.png'; // 修正路径
+    Notify.create({
+      type: 'negative',
+      message: '无法加载预览图像，数据不完整。',
+    });
   }
-  
-  showPreview.value = true;
 }
 
 // 下载单个结果
