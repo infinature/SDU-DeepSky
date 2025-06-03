@@ -1,0 +1,25 @@
+{
+  "extends": "./.quasar/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "app/*": ["*"],
+      "components/*": ["src/components/*"],
+      "layouts/*": ["src/layouts/*"],
+      "pages/*": ["src/pages/*"],
+      "assets/*": ["src/assets/*"],
+      "boot/*": ["src/boot/*"],
+      "router/*": ["src/router/*"],
+      "stores/*": ["src/stores/*"],
+      "css/*": ["src/css/*"]
+    }
+  },
+  "exclude": [
+    "dist",
+    "node_modules",
+    "src-capacitor/ios",
+    "src-capacitor/android",
+    "src-cordova"
+  ]
+} 

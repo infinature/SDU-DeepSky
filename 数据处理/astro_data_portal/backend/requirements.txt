@@ -1,0 +1,29 @@
+# Web Framework
+flask==3.0.2
+flask-cors==4.0.0
+werkzeug==3.0.1
+python-dotenv==1.0.0
+
+# Data Processing
+numpy==1.26.4
+pandas==2.2.1
+requests==2.31.0
+beautifulsoup4==4.12.3
+
+# Astronomical Data Processing
+astropy==6.0.0
+astroquery==0.4.8
+pyvo==1.5
+pyfits==3.8.0
+astro-datalab==3.1.1  # 添加以解决目录查询功能缺失
+astropy-healpix==0.7  # 添加以解决DESI模块依赖
+
+# Image Processing
+pillow==10.2.0
+matplotlib==3.8.3  # 用于图像处理和可视化
+opencv-python==4.9.0.80
+
+# Utilities
+python-dotenv==1.0.1
+tqdm==4.66.2
+pyyaml==6.0.1 

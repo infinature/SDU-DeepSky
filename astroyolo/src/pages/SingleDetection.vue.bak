@@ -1,0 +1,750 @@
+
+<template>
+  <q-page class="single-detection-page">
+    <!-- 顶部标题区域 -->
+    <div class="page-header q-pb-md">
+      <h1 class="page-title q-my-none flex items-center">
+        <q-icon name="photo_camera" size="md" class="q-mr-sm text-secondary" />
+        单图检测
+      </h1>
+      <div class="page-subtitle text-grey-4 q-mt-xs">轻松检测天体目标</div>
+    </div>
+
+    <!-- 检测参数卡片 -->
+    <q-card class="detection-card q-mb-lg animation-slide-up">
+      <q-card-section>
+        <div class="text-h6 q-mb-md flex items-center">
+          <q-icon name="tune" class="q-mr-sm text-secondary" />
+          <span>检测参数设置</span>
+        </div>
+        
+        <div class="row q-col-gutter-md q-mt-sm">
+          <div class="col-12 col-md-4">
+            <div class="slider-label flex items-center q-mb-xs">
+              <q-icon name="photo_filter" size="xs" class="q-mr-xs text-secondary" />
+              <span>图像类型</span>
+            </div>
+            <q-select
+              v-model="imageType"
+              :options="imageTypes"
+              outlined
+              dense
+              class="detection-select"
+              standout
+              bg-color="dark"
+              color="secondary"
+              popup-content-class="light-popup"
+              menu-self="top middle"
+              menu-anchor="bottom middle"
+              options-dark
+              options-dense
+            >
+              <template v-slot:prepend>
+                <q-icon name="photo_filter" color="secondary" />
+              </template>
+            </q-select>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="slider-label flex items-center q-mb-xs">
+              <q-icon name="cloud_upload" size="xs" class="q-mr-xs text-secondary" />
+              <span>自定义权重文件</span>
+              <q-tooltip>不上传时默认使用best.pt</q-tooltip>
+            </div>
+            <q-file
+              v-model="weightFile"
+              label="上传权重文件"
+              outlined
+              standout
+              dense
+              bg-color="dark"
+              color="secondary"
+              accept=".pt"
+              hint="可选：上传自定义的.pt权重文件"
+              class="weight-file-upload"
+            >
+              <template v-slot:prepend>
+                <q-icon name="upload_file" color="secondary" />
+              </template>
+              <template v-slot:after>
+                <q-btn
+                  v-if="weightFile"
+                  round
+                  dense
+                  flat
+                  icon="close"
+                  @click.stop="weightFile = null"
+                  color="secondary"
+                />
+              </template>
+            </q-file>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="slider-label flex items-center q-mb-xs">
+              <q-icon name="filter_center_focus" size="xs" class="q-mr-xs text-secondary" />
+              <span>置信度阈值: {{ confidenceThreshold.toFixed(2) }}</span>
+            </div>
+            <q-slider
+              v-model="confidenceThreshold"
+              :min="0"
+              :max="1"
+              :step="0.01"
+              label
+              label-color="secondary"
+              color="secondary"
+              track-color="grey-8"
+              thumb-color="secondary"
+              class="confidence-slider"
+            />
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
+
+    <!-- 上传图片卡片 -->
+    <q-card class="detection-card content-card animation-slide-up" style="animation-delay: 200ms">
+      <q-card-section>
+        <div class="panel-header">
+          <div class="text-h6 flex items-center">
+            <q-icon name="cloud_upload" class="q-mr-sm text-secondary" />
+            <span>上传图片</span>
+          </div>
+          <div class="text-caption text-grey-4">支持JPG、PNG、TIFF等常见天文图像格式</div>
+        </div>
+
+        <div class="upload-area q-my-lg text-center" style="background-color: rgba(14, 23, 41, 0.85); border-radius: 8px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+          <q-file
+            v-model="selectedFile"
+            outlined
+            accept="image/*"
+            label="选择文件"
+            class="upload-field"
+            standout
+            bg-color="dark"
+            color="secondary"
+          >
+            <template v-slot:prepend>
+              <q-icon name="attach_file" color="secondary" />
+            </template>
+          </q-file>
+          
+          <div class="divider text-grey-5 q-my-lg text-center">或者将文件拖放此区域</div>
+          
+          <!-- 模型选择按钮组 -->
+          <div class="row q-col-gutter-md justify-center q-my-xl">
+            <div class="col-auto" v-if="sampleImages.length > 0">
+              <q-btn
+                label="星系示例"
+                color="secondary"
+                text-color="secondary"
+                outline
+                class="model-btn glow-text"
+                @click="loadSampleImage(1)"
+              >
+                <q-tooltip>加载星系示例图片</q-tooltip>
+              </q-btn>
+            </div>
+            <div class="col-auto" v-if="sampleImages.length > 1">
+              <q-btn
+                label="星云示例"
+                color="secondary"
+                text-color="secondary"
+                outline
+                class="model-btn glow-text"
+                @click="loadSampleImage(2)"
+              >
+                <q-tooltip>加载星云示例图片</q-tooltip>
+              </q-btn>
+            </div>
+            <div class="col-auto" v-if="sampleImages.length > 2">
+              <q-btn
+                label="恒星示例"
+                color="secondary"
+                text-color="secondary"
+                outline
+                class="model-btn glow-text"
+                @click="loadSampleImage(3)"
+              >
+                <q-tooltip>加载恒星示例图片</q-tooltip>
+              </q-btn>
+            </div>
+          </div>
+          
+          <!-- 开始检测按钮 -->
+          <div class="text-center q-mt-xl">
+            <q-btn 
+              label="开始检测" 
+              color="secondary" 
+              text-color="white"
+              class="detection-btn q-px-xl q-py-sm glow-btn" 
+              :disable="!selectedFile"
+              unelevated
+              icon-right="rocket_launch"
+              @click="startDetection"
+              :loading="isLoading"
+            />
+          </div>
+          
+          <!-- 检测结果直接显示区域 -->
+          <div v-if="detectionResult && !isLoading" class="detection-results-container q-mt-xl" style="background-color: rgba(14, 23, 41, 0.85); border-radius: 8px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <div class="text-h6 text-white q-mb-md flex items-center">
+              <q-icon name="check_circle" class="q-mr-sm text-secondary" />
+              <span>检测结果</span>
+              <q-space />
+              <q-btn flat round dense icon="close" color="white" @click="detectionResult = null" />
+            </div>
+
+            <!-- 错误信息如果有的话 -->
+            <div v-if="detectionError" class="text-negative text-center q-pa-md q-mb-md" style="background-color: rgba(255, 0, 0, 0.1); border-radius: 8px;">
+              <q-icon name="error" size="md" />
+              <div class="q-mt-sm">{{ detectionError }}</div>
+            </div>
+            
+            <!-- 结果信息 -->
+            <div v-else class="row q-col-gutter-md">
+              <!-- 检测图片 -->
+              <div class="col-12 text-center q-mb-md">
+                <img :src="resultImage" class="result-image" v-if="resultImage" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);" />
+              </div>
+              
+              <!-- 检测信息 -->
+              <div class="col-12 col-md-6 q-mt-md">
+                <div class="text-subtitle1 text-secondary q-mb-sm">检测信息</div>
+                <q-list bordered separator class="result-list" style="background-color: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label>检测数量</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-chip color="secondary" text-color="dark">{{ detectionCount }}</q-chip>
+                    </q-item-section>
+                  </q-item>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label>置信度阈值</q-item-label>
+                    </q-item-section>
+                    <q-item-section side>
+                      <q-chip color="secondary" text-color="dark">{{ confidenceThreshold.toFixed(2) }}</q-chip>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
+              
+              <!-- 检测结果表格 -->
+              <div class="col-12 q-mt-md" v-if="detectionBoxes.length > 0">
+                <div class="text-subtitle1 text-secondary q-mb-sm">识别结果</div>
+                <q-table
+                  :rows="detectionBoxes"
+                  :columns="boxesColumns"
+                  row-key="id"
+                  dark
+                  class="result-table"
+                  :pagination="{rowsPerPage: 5}"
+                  style="background-color: rgba(255, 255, 255, 0.05); border-radius: 8px;"
+                />
+              </div>
+              
+              <!-- 操作按钮 -->
+              <div class="col-12 q-mt-md text-center">
+                <q-btn flat label="新的检测" color="secondary" @click="detectionResult = null" class="q-mr-md" />
+                <q-btn flat label="保存结果" color="secondary" @click="saveResult" v-if="resultImage" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-page>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { useQuasar } from 'quasar';
+import { Notify as QNotify } from 'quasar';
+import axios from 'axios';
+
+defineOptions({
+  name: 'SingleDetection'
+});
+
+const $q = useQuasar();
+
+// 参数设置
+const selectedFile = ref(null);
+const weightFile = ref(null); // 添加权重文件引用
+const confidenceThreshold = ref(0.6);
+const imageType = ref({ label: 'JPG图像', value: 'jpg' });
+const imageTypes = [
+  { label: 'JPG图像', value: 'jpg' },
+  { label: 'PNG图像', value: 'png' },
+  { label: 'TIFF图像', value: 'tiff' },
+  { label: 'NPY数据', value: 'npy' }
+];
+
+// 状态变量
+const isLoading = ref(false);
+// 不再使用showResult变量控制弹出框，直接使用detectionResult判断是否显示结果
+const detectionResult = ref(null); // 新增整个检测结果对象
+const resultImage = ref('');
+const detectionCount = ref(0);
+const detectionBoxes = ref([]);
+const detectionError = ref('');
+
+// 表格列定义
+const boxesColumns = [
+  { name: 'id', label: '序号', field: 'id', align: 'left' },
+  { name: 'confidence', label: '置信度', field: 'confidence', format: val => Number(val).toFixed(4), align: 'center' },
+  { name: 'x1', label: 'X1', field: 'x1', format: val => Number(val).toFixed(2), align: 'right' },
+  { name: 'y1', label: 'Y1', field: 'y1', format: val => Number(val).toFixed(2), align: 'right' },
+  { name: 'x2', label: 'X2', field: 'x2', format: val => Number(val).toFixed(2), align: 'right' },
+  { name: 'y2', label: 'Y2', field: 'y2', format: val => Number(val).toFixed(2), align: 'right' }
+];
+
+// API基础URL
+const apiBaseUrl = ref(process.env.API_URL || 'http://localhost:5000');
+
+// 示例图片数据
+// 直接使用真实的示例图片路径
+const sampleImages = ref([
+  { id: 1, name: '星系示例', path: '/sample_images/SDSS_1.2376611256069e+18_rgb.jpg', type: 'jpg', thumbnail: '/sample_images/SDSS_1.2376611256069e+18_rgb_thumb.jpg' },
+  { id: 2, name: '星云示例', path: '/sample_images/SDSS_1.2376618718633e+18_rgb.jpg', type: 'jpg', thumbnail: '/sample_images/SDSS_1.2376618718633e+18_rgb_thumb.jpg' },
+  { id: 3, name: 'NPY数据示例', path: '/sample_images/SDSS_1237668572011365559.npy', type: 'npy', thumbnail: '/sample_images/SDSS_1237668572011365559_thumb.jpg' }
+]);
+
+// 不再使用异步请求获取示例图片列表
+const fetchSamples = () => {
+  console.log('使用本地示例图片');
+  // sampleImages变量已预先设置好了数据
+};
+
+// 仍然调用fetchSamples以保持代码结构一致性
+fetchSamples();
+
+// 开始检测
+const startDetection = async () => {
+  if (!selectedFile.value) {
+    QNotify.create({
+      color: 'negative',
+      message: '请选择图片文件',
+      position: 'top'
+    });
+    return;
+  }
+  
+  isLoading.value = true;
+  detectionError.value = '';
+  detectionResult.value = null; // 清空先前的结果
+  
+  try {
+    // 准备FormData数据
+    const formData = new FormData();
+    formData.append('file', selectedFile.value);
+    formData.append('confidence', confidenceThreshold.value);
+    formData.append('image_type', imageType.value.value);
+    
+    // 如果用户上传了自定义权重文件，则附加到请求中
+    if (weightFile.value) {
+      formData.append('weight_file', weightFile.value);
+    }
+    
+    // 发送请求到API
+    const response = await axios.post(`${apiBaseUrl.value}/api/detect`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    
+    // 处理响应
+    if (response.data.status === 'success') {
+      // 设置整个结果对象
+      detectionResult.value = response.data;
+      
+      // 设置结果图片 - 注意API返回的是完整URL或base64
+      if (response.data.result_image.startsWith('data:')) {
+        resultImage.value = response.data.result_image;
+      } else if (response.data.result_image.startsWith('/')) {
+        resultImage.value = apiBaseUrl.value + response.data.result_image;
+      } else {
+        resultImage.value = `data:image/png;base64,${response.data.result_image}`;
+      }
+      
+      detectionCount.value = response.data.detection_count || 0;
+      
+      // 处理检测框
+      detectionBoxes.value = response.data.boxes || [];
+      
+      // 显示成功通知
+      QNotify.create({
+        color: 'positive',
+        message: `检测完成，共发现${detectionCount.value}个目标`,
+        position: 'top',
+        timeout: 3000
+      });
+    } else {
+      detectionError.value = response.data.message || '检测过程中出现错误';
+      detectionResult.value = { status: 'error' }; // 设置为错误状态，使页面显示错误信息
+      
+      QNotify.create({
+        color: 'negative',
+        message: detectionError.value,
+        position: 'top'
+      });
+    }
+  } catch (error) {
+    console.error('检测请求错误', error);
+    detectionError.value = error.response?.data?.message || '服务器连接错误';
+    detectionResult.value = { status: 'error' }; // 设置为错误状态
+    
+    QNotify.create({
+      color: 'negative',
+      message: detectionError.value,
+      position: 'top'
+    });
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+// 加载示例图片
+const loadSampleImage = async (sampleId) => {
+  const sample = sampleImages.value.find(s => s.id === sampleId);
+  if (!sample) return;
+  
+  // 设置对应的类型
+  imageType.value = imageTypes.find(t => t.value === sample.type) || imageTypes[0];
+  
+  isLoading.value = true;
+  detectionError.value = '';
+  detectionResult.value = null; // 清空先前的结果
+  
+  try {
+    // 构建请求参数
+    const params = new URLSearchParams();
+    params.append('sample_path', sample.path);
+    params.append('confidence', confidenceThreshold.value);
+    params.append('image_type', sample.type);
+    
+    // 发送请求到API
+    const response = await axios.post(`${apiBaseUrl.value}/api/detect`, params);
+    
+    // 处理响应
+    if (response.data.status === 'success') {
+      // 设置整个结果对象
+      detectionResult.value = response.data;
+      
+      // 设置结果图片
+      if (response.data.result_image.startsWith('data:')) {
+        resultImage.value = response.data.result_image;
+      } else if (response.data.result_image.startsWith('/')) {
+        resultImage.value = apiBaseUrl.value + response.data.result_image;
+      } else {
+        resultImage.value = `data:image/png;base64,${response.data.result_image}`;
+      }
+      
+      detectionCount.value = response.data.detection_count || 0;
+      detectionBoxes.value = response.data.boxes || [];
+      
+      // 显示成功通知
+      QNotify.create({
+        color: 'positive',
+        message: `示例图片检测完成，共发现${detectionCount.value}个目标`,
+        position: 'top',
+        timeout: 3000
+      });
+    } else {
+      detectionError.value = response.data.message || '检测示例图片时出现错误';
+      detectionResult.value = { status: 'error' }; // 设置为错误状态，使页面显示错误信息
+      
+      QNotify.create({
+        color: 'negative',
+        message: detectionError.value,
+        position: 'top'
+      });
+    }
+  } catch (error) {
+    console.error('示例图片检测请求错误', error);
+    detectionError.value = error.response?.data?.message || '服务器连接错误';
+    detectionResult.value = { status: 'error' }; // 设置为错误状态
+    
+    QNotify.create({
+      color: 'negative',
+      message: detectionError.value,
+      position: 'top'
+    });
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+// 保存结果
+const saveResult = () => {
+  if (!resultImage.value) return;
+  
+  // 创建a标签并模拟点击下载
+  const a = document.createElement('a');
+  a.href = resultImage.value;
+  a.download = `detection_result_${new Date().getTime()}.png`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
+</script>
+
+<style lang="scss" scoped>
+// SASS color module now imported via quasar.config.js additionalData
+
+.single-detection-page {
+  padding: 32px;
+  background-image: url('/M81M82_CAT_960.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(14, 23, 41, 0.85);
+    z-index: -1;
+  }
+}
+
+// 页面标题样式
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  opacity: 0.8;
+}
+
+// 卡片样式
+.detection-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+  }
+  
+  &.content-card {
+    min-height: 400px;
+  }
+}
+
+// 选择器和滑块样式
+.detection-select {
+  .q-field__control {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+}
+
+.light-popup {
+  background-color: rgba(14, 23, 41, 0.85) !important;
+  color: white !important;
+  
+  .q-item {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    margin: 2px 0;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .q-item__label {
+      color: $secondary;
+    }
+  }
+}
+
+// 全局修改下拉菜单样式
+:deep(.q-menu) {
+  background: rgba(14, 23, 41, 0.9) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+:deep(.q-virtual-scroll__content) {
+  background: transparent !important;
+}
+
+// 下拉选项样式
+:deep(.q-item) {
+  border-radius: 4px;
+  margin: 4px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  &.q-manual-focusable--focused {
+    background: rgba($secondary, 0.2) !important;
+  }
+  
+  .q-item__label {
+    color: $secondary !important;
+    font-weight: 500;
+    text-shadow: 0 0 8px rgba($secondary, 0.5);
+  }
+}
+
+.confidence-slider {
+  height: 10px;
+}
+
+.slider-label {
+  font-size: 0.9rem;
+  color: $grey-5;
+}
+
+// 面板头部
+.panel-header {
+  margin-bottom: 1.5rem;
+}
+
+// 上传区域样式
+.upload-area {
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: $secondary;
+  }
+  
+  .upload-field {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .divider {
+    position: relative;
+    margin: 20px 0;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+// 按钮样式
+.model-btn {
+  min-width: 120px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($secondary, 0.5);
+  }
+}
+
+// 荧光文字效果
+.glow-text {
+  text-shadow: 0 0 8px rgba($secondary, 0.7);
+}
+
+.glow-btn {
+  box-shadow: 0 0 15px rgba($secondary, 0.5);
+  
+  &:hover {
+    box-shadow: 0 0 20px rgba($secondary, 0.8);
+  }
+}
+
+// 开始检测按钮
+.detection-btn {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  
+  &:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($secondary, 0.4);
+  }
+}
+
+// 结果弹窗样式
+.result-dialog {
+  background: rgba(14, 23, 41, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  
+  .result-image {
+    max-width: 100%;
+    max-height: 60vh;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .result-list {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    
+    .q-item {
+      min-height: 48px;
+    }
+  }
+  
+  .result-table {
+    .q-table__container {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    
+    thead tr {
+      background: rgba($secondary, 0.2);
+      th {
+        color: $secondary;
+        font-weight: 600;
+      }
+    }
+    
+    tbody td {
+      color: white;
+    }
+  }
+}
+
+// 动画效果
+.animation-slide-up {
+  animation: slideUp 0.6s ease forwards;
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+</style>

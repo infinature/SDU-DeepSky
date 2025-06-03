@@ -1,0 +1,151 @@
+/* Astroyolo 自定义颜色 */
+
+/* 主色 - 对应 primary */
+.text-astroyolo-primary {
+  color: rgb(19, 54, 101) !important; /* --md-sys-color-primary */
+}
+.bg-astroyolo-primary {
+  background: rgb(19, 54, 101) !important; /* --md-sys-color-primary */
+}
+
+/* 亮蓝色 - 对应 inverse-primary */
+.text-astroyolo-bright {
+  color: rgb(170, 199, 255) !important; /* --md-sys-color-inverse-primary */
+}
+.bg-astroyolo-bright {
+  background: rgb(170, 199, 255) !important; /* --md-sys-color-inverse-primary */
+}
+
+/* 表面颜色 - 对应 surface-tint */
+.text-astroyolo-surface-tint {
+  color: rgb(65, 95, 145) !important; /* --md-sys-color-surface-tint */
+}
+.bg-astroyolo-surface-tint {
+  background: rgb(65, 95, 145) !important; /* --md-sys-color-surface-tint */
+}
+
+/* 次要色 - 对应 secondary */
+.text-astroyolo-secondary {
+  color: rgb(100, 109, 128) !important; /* Updated from _variables.scss $secondary */
+}
+.bg-astroyolo-secondary {
+  background: rgb(100, 109, 128) !important; /* Updated from _variables.scss $secondary */
+}
+
+/* 强调色 - 对应 tertiary */
+.text-astroyolo-accent {
+  color: rgb(127, 100, 132) !important; /* Updated from _variables.scss $accent */
+}
+.bg-astroyolo-accent {
+  background: rgb(127, 100, 132) !important; /* Updated from _variables.scss $accent */
+}
+
+/* 主色容器 - 对应 primary-container */
+.text-astroyolo-primary-container {
+  color: rgb(80, 109, 160) !important; /* --md-sys-color-primary-container */
+}
+.bg-astroyolo-primary-container {
+  background: rgb(80, 109, 160) !important; /* --md-sys-color-primary-container */
+}
+
+/* 主色容器上的文本 - 对应 on-primary-container */
+.text-on-astroyolo-primary-container {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-primary-container */
+}
+
+/* 自定义主色容器背景 - 保留原有浅色调效果 */
+.bg-astroyolo-primary-container-light {
+  background: rgb(214, 227, 255) !important; /* 保留原有浅色调效果 */
+}
+
+/* 次色容器 - 对应 secondary-container */
+.text-astroyolo-secondary-container {
+  color: rgb(100, 109, 128) !important; /* --md-sys-color-secondary-container */
+}
+.bg-astroyolo-secondary-container {
+  background: rgb(100, 109, 128) !important; /* --md-sys-color-secondary-container */
+}
+
+/* 次色容器上的文本 - 对应 on-secondary-container */
+.text-on-astroyolo-secondary-container {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-secondary-container */
+}
+
+/* 自定义次色容器背景 - 保留原有浅色调效果 */
+.bg-astroyolo-secondary-container-light {
+  background: rgb(218, 226, 249) !important; /* 保留原有浅色调效果 */
+}
+
+/* 强调色容器 - 对应 tertiary-container */
+.text-astroyolo-tertiary-container {
+  color: rgb(127, 100, 132) !important; /* --md-sys-color-tertiary-container */
+}
+.bg-astroyolo-tertiary-container {
+  background: rgb(127, 100, 132) !important; /* --md-sys-color-tertiary-container */
+}
+
+/* 强调色容器上的文本 - 对应 on-tertiary-container */
+.text-on-astroyolo-tertiary-container {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-tertiary-container */
+}
+
+/* 自定义强调色容器背景 - 保留原有浅色调效果 */
+.bg-astroyolo-tertiary-container-light {
+  background: rgb(250, 216, 253) !important; /* 保留原有浅色调效果 */
+}
+
+/* 背景颜色 - 对应 background */
+.text-astroyolo-bg {
+  color: rgb(249, 249, 255) !important; /* --md-sys-color-background */
+}
+.bg-astroyolo-bg {
+  background: rgb(249, 249, 255) !important; /* --md-sys-color-background */
+}
+
+/* 卡片背景 - 对应 surface-container-lowest */
+.bg-astroyolo-card {
+  background: rgb(255, 255, 255) !important; /* --md-sys-color-surface-container-lowest */
+}
+
+/* 表面变种颜色 */
+.text-astroyolo-surface-variant {
+  color: rgb(224, 226, 236) !important; /* --md-sys-color-surface-variant from light-mc.css */
+}
+.bg-astroyolo-surface-variant {
+  background: rgb(224, 226, 236) !important; /* --md-sys-color-surface-variant from light-mc.css */
+}
+
+/* 轮廓颜色 */
+.text-astroyolo-outline {
+  color: rgb(79, 82, 90) !important; /* --md-sys-color-outline from light-mc.css */
+}
+.border-astroyolo-outline {
+  border-color: rgb(79, 82, 90) !important; /* --md-sys-color-outline from light-mc.css */
+}
+
+/* 轻量级边框颜色 */
+.border-astroyolo-light {
+  border-color: rgb(224, 226, 236) !important; /* --md-sys-color-surface-variant from light-mc.css */
+}
+
+/* 文本颜色 */
+.text-astroyolo-text-dark {
+  color: rgb(25, 28, 32) !important; /* --md-sys-color-on-background from light-mc.css */
+}
+.text-astroyolo-text-light {
+  color: rgb(240, 240, 247) !important; /* --md-sys-color-inverse-on-surface from light-mc.css */
+}
+.text-astroyolo-text-secondary {
+  color: rgb(51, 54, 62) !important; /* --md-sys-color-on-surface-variant from light-mc.css，更新为与变量文件一致 */
+}
+
+/* 亮色主题专用文本颜色 */
+.text-astroyolo-light-text-primary {
+  color: rgb(25, 28, 32) !important; /* 主要文本 - 深灰色而非纯黑 */
+}
+.text-astroyolo-light-text-secondary {
+  color: rgb(79, 82, 90) !important; /* --md-sys-color-outline from light-mc.css 次要文本 */
+}
+.text-astroyolo-light-text-disabled {
+  color: rgba(25, 28, 32, 0.38) !important; /* 禁用文本 - 主文本的38%透明度 */
+}

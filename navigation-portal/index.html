@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天文项目导航</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#data-processing">Data Processing</a></li>
+        </ul>
+    </nav>
+    <section class="hero-section" id="home">
+        <div class="hero-content">
+            <img src="images/山东大学-logo-2048px.png" alt="SDU Logo" class="hero-logo">
+            <h1>天体智能检测预测平台</h1>
+            <p class="subtitle">SDU数据结构课设</p>
+            <p class="authors">作者：孟俊宇 (AstroYOLO), 何准 (MSTAR), 徐王炜梵(MSPC-Net)</p>
+        </div>
+    </section>
+<section id="publications">
+    <div class="container">
+        <header>
+            <h1>天文项目导航</h1>
+            <p>统一访问入口</p>
+        </header>
+        <main class="projects-list">
+            <div class="project-card">
+                <img src="images/astroyolo.png" alt="AstroYOLO 项目图片" class="project-image">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h2>AstroYOLO: A hybrid CNN-Transformer deep-learning object-detection model for blue horizontal-branch stars</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Blue horizontal-branch stars (BHBs) are ideal tracers for studying the Milky Way (MW) due to their bright andnearly constant magnitude. However, an incomplete screen of BHBs from a survey would result in bias of estimation ofthe structure or mass of the MW. With surveys of large sky telescopes like the Sloan Digital Sky Survey (SDSS), it ispossible to obtain a complete sample. Thus, detecting BHBs from massive photometric images quickly a...</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="http://localhost:8083" target="_blank" class="btn">访问项目</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <img src="images/mspc.png" alt="MSPC-Net 项目图片" class="project-image">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h2>Classification of Astronomical Spectra Based on Multiscale Partial Convolution</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>The automated and efficient classification of astronomical spectra is an important research issue in the era of large sky surveys. Most current studies on automatic spectral classification primarily focus on specific data sets and demonstrate outstanding performance. However, the diversity in spectra poses formidable challenges for these classification models, as they exhibit limited capability to generalize across more comprehensive data set...</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="http://localhost:8081" target="_blank" class="btn">访问项目</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <img src="images/mstar.png" alt="MSTAR Classification Frontend 项目图片" class="project-image">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h2>Deep Multimodal Networks for M-type Star Classification with Paired Spectrum and Photometric Image</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Traditional stellar classification methods include spectral and photometric classification separately. Although satisfactory results can be achieved, the accuracy could be improved. In this paper, we pioneer a novel approach to deeply fuse the spectra and photometric images of the sources in an advanced multimodal network to enhance the model's discriminatory ability. We use Transformer as the fusion module and apply a spectrum-image contrasti...</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="http://localhost:8082" target="_blank" class="btn">访问项目</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 Mengjun Yu, He Zhun, Xu Wangweifan. All rights reserved.</p>
+        </footer>
+    </div>
+</section>
+
+<section id="data-processing">
+    <div class="container">
+        <header>
+            <h1>天文数据综合处理平台 (Astro Data Comprehensive Processing Platform)</h1>
+            <p>提供 DESI, J-PLUS, Pan-STARRS 等巡天项目的数据下载、处理与可视化服务。</p>
+        </header>
+        <main class="projects-list">
+            <!-- Data Processing Project Card 1: DESI -->
+            <div class="project-card">
+                <img src="images/desi.png" alt="DESI Data Services" class="project-image">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h2>DESI 数据服务 (DESI Data Services)</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>提供暗能量光谱巡天 (DESI) 数据的检索、下载和初步处理功能。</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="http://localhost:9000/#/desi" target="_blank" class="btn">访问平台</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Processing Project Card 2: J-PLUS -->
+            <div class="project-card">
+                <img src="images/jplus.png" alt="J-PLUS Data Interface" class="project-image">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h2>J-PLUS 数据接口 (J-PLUS Data Interface)</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>接入 Javalambre Physics of the Accelerating Universe Astrophysical Survey (J-PLUS) 数据资源。</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="http://localhost:9000/#/jplus" target="_blank" class="btn">访问平台</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Processing Project Card 3: Pan-STARRS -->
+            <div class="project-card">
+                <img src="images/Pan-STARRS.png" alt="Pan-STARRS Image Access" class="project-image">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h2>Pan-STARRS 图像获取 (Pan-STARRS Image Access)</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>获取 Pan-STARRS 巡天项目的大视场多色图像数据。</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="http://localhost:9000/#/panstarrs" target="_blank" class="btn">访问平台</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 Mengjun Yu, He Zhun, Xu Wangweifan. All rights reserved.</p>
+        </footer>
+    </div>
+</section>
+
+<script>
+        const nav = document.querySelector('.top-nav');
+        const navHeight = nav.offsetHeight;
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > navHeight) { // 或者一个固定的阈值，比如 50
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

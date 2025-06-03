@@ -1,0 +1,24 @@
+{
+  "task_id": "task_1747394461",
+  "timestamp": 1747394461.4413872,
+  "files_count": 1,
+  "detection_count": 1,
+  "results": [
+    {
+      "filename": "SDSS_1.23765546324702e+18_rgb.jpg",
+      "result_filename": "SDSS_1.23765546324702e+18_rgb_result.png",
+      "boxes": [
+        {
+          "id": 1,
+          "confidence": 0.7699353694915771,
+          "x1": 30.28963123668324,
+          "y1": 30.15087058327415,
+          "x2": 33.81152066317472,
+          "y2": 33.939971923828125,
+          "class_id": 0
+        }
+      ],
+      "detection_count": 1
+    }
+  ]
+}

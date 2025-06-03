@@ -1,0 +1,170 @@
+// SASS color module now imported via quasar.config.js additionalData
+// Import @fontsource fonts
+@import '@fontsource/rajdhani/300.css'; // Light
+@import '@fontsource/rajdhani/400.css'; // Regular
+@import '@fontsource/rajdhani/500.css'; // Medium
+@import '@fontsource/rajdhani/600.css'; // SemiBold
+@import '@fontsource/rajdhani/700.css'; // Bold
+
+@import '@fontsource/exo-2/100.css';  // Thin
+@import '@fontsource/exo-2/200.css';  // ExtraLight
+@import '@fontsource/exo-2/300.css';  // Light
+@import '@fontsource/exo-2/400.css';  // Regular
+@import '@fontsource/exo-2/500.css';  // Medium
+@import '@fontsource/exo-2/600.css';  // SemiBold
+@import '@fontsource/exo-2/700.css';  // Bold
+@import '@fontsource/exo-2/800.css';  // ExtraBold
+@import '@fontsource/exo-2/900.css';  // Black
+
+// Import SCSS variables
+@import 'variables';
+
+// Import custom colors
+@import './custom-colors.css';
+
+// app global css in SCSS form
+
+// Import Google Fonts (Quasar handles the actual import via quasar.config.js extras)
+
+// Body and Font settings
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: rgb(249, 249, 255); // 简洁的浅色背景
+  color: rgb(25, 28, 32);  // 深色文字
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+// General heading styles
+h1, h2, h3, h4, h5, h6,
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
+  font-family: 'Roboto', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  color: $text-primary; // 根据新的配色方案使用深色文本
+}
+
+// Basic link styling
+a {
+  color: $primary;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: color.scale($primary, $lightness: 20%);
+  }
+}
+
+// Quasar component overrides
+.q-btn {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+  text-transform: none;
+  border-radius: 4px;
+  
+  &.q-btn--outline {
+    border: 1px solid rgb(65, 95, 145);
+  }
+}
+
+// Utility classes
+.card-shadow {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-border {
+  border: 1px solid $surface-container-highest; // 使用light-mc.css中的边框色
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $on-background; // 使用light-mc.css中的文本色
+  margin-bottom: 16px;
+}
+
+// 全局组件样式
+.q-header {
+  background-color: rgb(65, 95, 145); // 使用简洁蓝色
+}
+
+.q-drawer {
+  background-color: rgb(249, 249, 255); // 浅灰背景
+}
+
+.q-page-container {
+  padding-top: 50px; // 为顶部导航栏留出空间
+}
+
+.q-card {
+  border-radius: 8px; // 更现代的圆角
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); // 更柔和的阴影
+  background-color: $surface-container-lowest; // 使用light-mc.css中的卡片背景色
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: rgb(25, 28, 32);
+  
+  .q-card__section {
+    color: rgb(25, 28, 32);
+  }
+}
+
+// 为统计卡片添加特殊样式
+.stat-card {
+  &.blue-card {
+    background-color: rgb(214, 227, 255); // 对应 --md-sys-color-primary-container
+    color: rgb(40, 71, 119); // 对应 --md-sys-color-on-primary-container
+  }
+  &.green-card {
+    background-color: rgb(218, 226, 249); // 对应 --md-sys-color-secondary-container
+    color: rgb(62, 71, 89); // 对应 --md-sys-color-on-secondary-container
+  }
+  &.purple-card {
+    background-color: rgb(250, 216, 253); // 对应 --md-sys-color-tertiary-container
+    color: rgb(87, 62, 92); // 对应 --md-sys-color-on-tertiary-container
+  }
+  &.cyan-card {
+    background-color: rgb(214, 227, 255); // 对应 --md-sys-color-primary-container
+    color: rgb(40, 71, 119); // 对应 --md-sys-color-on-primary-container
+  }
+}
+
+// 滚动条样式
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $surface-container; // 使用light-mc.css中的浅色容器作为轨道背景
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $outline-variant; // 使用light-mc.css中的轮廓变体颜色
+  border-radius: 4px;
+  
+  &:hover {
+    background: $outline; // 悬停时使用更深的轮廓颜色
+  }
+}
+
+// 页脚样式
+.app-footer {
+  padding: 20px 0;
+  background: $surface-container-low; // 使用light-mc.css中的浅色背景
+  text-align: center;
+  border-top: 1px solid $surface-container-highest; // 使用light-mc.css中的边框色
+  margin-top: auto; // 保持页脚在底部
+
+  p {
+    margin: 0;
+    color: $on-surface-variant; // 使用light-mc.css中的次要文本色
+  }
+
+  a {
+    color: $primary;
+    &:hover {
+      color: color.scale($primary, $lightness: 20%);
+    }
+  }
+}

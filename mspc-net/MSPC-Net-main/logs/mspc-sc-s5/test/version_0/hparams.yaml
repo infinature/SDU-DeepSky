@@ -1,0 +1,57 @@
+T_0: 40
+T_mult: 2
+batch_size: 4
+class_names:
+- A
+- B
+- F
+- G
+- K
+- M
+- O
+data_dir: /srv/xuwangweifan/dataset/kfold_0
+debug: false
+device: auto
+device_list:
+- 0
+- 1
+- 2
+- 3
+epochs: 5
+eta_min: 1.0e-08
+in_channel: 1
+log: true
+log_path: ./logs
+lr: 0.0001
+min_delta: 0.001
+num_classes: 7
+num_workers: 16
+patience: 25
+pc:
+  act_layer: GELU
+  attention: ECA_F
+  depth:
+  - 1
+  - 1
+  - 1
+  - 1
+  depth_scale: 6.0
+  drop_path_rate: 0.2
+  embed_dim: 64
+  head_dim: 1024
+  in_channel: 1
+  merge_conv_size: 3
+  merge_conv_stride: 2
+  mp_ratio: 1.0
+  n_div: 8
+  norm_layer: BN
+  patch_conv_size: 3
+  patch_conv_stride: 1
+  pc_conv_size: 5
+  pc_conv_size_scale: 9.0
+precision: 16-mixed
+project: mspc-sc-s5
+seed: 42
+spectrum_length: 3584
+sweep: test
+test: true

@@ -1,0 +1,4 @@
+data_type,path,output_path,download_method
+zcat,spectro/redux/iron/zcatalog/v1/zall-pix-iron.fits,zcat/zall-pix-iron.fits,http
+spectra,spectro/redux/iron/healpix/spectra-64/149/14981.fits,spectra/14981.fits,http
+tile,spectro/redux/iron/tiles/cumulative/80607/coadd-80607-thru20220326.fits,tiles/80607-coadd.fits,wget

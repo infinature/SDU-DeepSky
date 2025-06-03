@@ -1,0 +1,101 @@
+// SASS color module now imported via quasar.config.js additionalData
+// src/css/_variables.scss
+
+// AstroYOLO Color Palette - 完全基于light-mc.css的亮色主题
+// Reference: /home/mengjunyu/Astroyolo-frontend/css/light-mc.css
+
+// ---- Material Design 3 Light Color Palette ----
+// 遵循light-mc.css中的颜色定义
+
+// 核心颜色 - Core Colors
+$primary: rgb(19, 54, 101);            // --md-sys-color-primary
+$secondary: rgb(46, 54, 71);           // --md-sys-color-secondary
+$tertiary: rgb(69, 46, 74);            // --md-sys-color-tertiary
+$error: rgb(116, 0, 6);                // --md-sys-color-error
+
+// 表面颜色 - Surface Colors
+$surface-tint: rgb(65, 95, 145);       // --md-sys-color-surface-tint
+$surface: rgb(249, 249, 255);          // --md-sys-color-surface
+$background: rgb(249, 249, 255);       // --md-sys-color-background
+
+// 容器颜色 - Container Colors
+$primary-container: rgb(80, 109, 160); // --md-sys-color-primary-container
+$secondary-container: rgb(100, 109, 128); // --md-sys-color-secondary-container
+$tertiary-container: rgb(127, 100, 132); // --md-sys-color-tertiary-container
+$error-container: rgb(207, 44, 39);     // --md-sys-color-error-container
+
+// 表面容器 - Surface Containers
+$surface-container-lowest: rgb(255, 255, 255); // --md-sys-color-surface-container-lowest
+$surface-container-low: rgb(243, 243, 250);   // --md-sys-color-surface-container-low
+$surface-container: rgb(231, 232, 238);       // --md-sys-color-surface-container
+$surface-container-high: rgb(220, 220, 227);  // --md-sys-color-surface-container-high
+$surface-container-highest: rgb(209, 209, 216); // --md-sys-color-surface-container-highest
+
+// ---- 文本颜色 - Text Colors ----
+$on-primary: rgb(255, 255, 255);           // --md-sys-color-on-primary
+$on-secondary: rgb(255, 255, 255);         // --md-sys-color-on-secondary
+$on-tertiary: rgb(255, 255, 255);          // --md-sys-color-on-tertiary
+$on-error: rgb(255, 255, 255);             // --md-sys-color-on-error
+
+$on-primary-container: rgb(255, 255, 255);  // --md-sys-color-on-primary-container
+$on-secondary-container: rgb(255, 255, 255); // --md-sys-color-on-secondary-container
+$on-tertiary-container: rgb(255, 255, 255); // --md-sys-color-on-tertiary-container
+$on-error-container: rgb(255, 255, 255);    // --md-sys-color-on-error-container
+
+$on-background: rgb(25, 28, 32);           // --md-sys-color-on-background
+$on-surface: rgb(15, 17, 22);              // --md-sys-color-on-surface
+$on-surface-variant: rgb(51, 54, 62);      // --md-sys-color-on-surface-variant
+
+// ---- 边框和轮廓 - Borders & Outlines ----
+$outline: rgb(79, 82, 90);                  // --md-sys-color-outline
+$outline-variant: rgb(106, 109, 117);       // --md-sys-color-outline-variant
+
+// ---- 反色和固定颜色 - Inverse & Fixed Colors ----
+$inverse-surface: rgb(46, 48, 54);          // --md-sys-color-inverse-surface
+$inverse-on-surface: rgb(240, 240, 247);    // --md-sys-color-inverse-on-surface
+$inverse-primary: rgb(170, 199, 255);       // --md-sys-color-inverse-primary
+
+// ---- 功能性颜色映射 - Functional Color Mappings ----
+// 为了保持兼容性，映射新颜色到原有变量
+$app-background: $background;                // 主应用背景
+$card-background: $surface-container-lowest; // 卡片背景
+$subtle-background: $surface-container-low;  // 次要背景
+$hover-background: rgba($primary, 0.08);     // 悬停效果背景
+
+// 文本映射
+$text-primary: $on-background;              // 主要文本颜色
+$text-secondary: $on-surface-variant;        // 次要文本颜色
+$text-on-primary-color: $on-primary;         // 主色上的文本
+$text-on-secondary-color: $on-secondary;     // 次色上的文本
+$text-on-accent-color: $on-tertiary;         // 强调色上的文本
+$text-disabled: rgba($on-background, 0.38);  // 禁用状态文本
+
+// 边框颜色映射
+$border-color: $surface-container-highest;   // 通用边框颜色
+
+// ---- Quasar兼容变量 - Quasar Compatibility Variables ----
+// 这些变量需要保留以确保与Quasar框架兼容
+$dark: $inverse-surface;                    // 深色背景
+$dark-page: $inverse-surface;               // 深色页面背景
+
+// 状态颜色 - Status Colors
+$positive: rgb(60, 100, 60);                // 自定义成功状态色
+$negative: $error;                          // 错误状态色
+$info: rgb(55, 85, 134);                    // 信息状态色
+$warning: $error-container;                 // 警告状态色
+
+// ---- Astroyolo特定语义颜色 - Astroyolo Specific Semantic Colors ----
+// 这些颜色用于custom-colors.css中的特定元素
+$astroyolo-primary: $primary;
+$astroyolo-secondary: $secondary;
+$astroyolo-accent: $tertiary;
+
+// 容器背景颜色
+$astroyolo-primary-container-bg: rgb(214, 227, 255);   // 适配亮色主题的主容器背景色
+$astroyolo-secondary-container-bg: rgb(218, 226, 249); // 适配亮色主题的次容器背景色
+$astroyolo-tertiary-container-bg: rgb(250, 216, 253);  // 适配亮色主题的强调容器背景色
+
+// 文本颜色
+$astroyolo-text-dark: $on-background;
+$astroyolo-text-light: $inverse-on-surface;
+$astroyolo-bright-blue: $inverse-primary;

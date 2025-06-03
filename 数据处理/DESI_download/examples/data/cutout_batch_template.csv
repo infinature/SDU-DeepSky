@@ -1,0 +1,7 @@
+ra,dec,size_pixels,bands,img_format,output_subdir,filename_prefix
+150.0776,2.2169,64,grz,fits,my_fits_cutouts,obj1_grz
+150.0776,2.2169,128,g,jpeg,my_jpeg_cutouts,obj1_g_band
+150.0776,2.2169,128,r,jpeg,my_jpeg_cutouts,obj1_r_band
+150.0776,2.2169,128,z,jpeg,my_jpeg_cutouts,obj1_z_band
+210.538,52.598,96,grz,fits,another_set_fits,sourceA
+210.538,52.598,256,gri,jpeg,another_set_jpegs,sourceA_gri_large

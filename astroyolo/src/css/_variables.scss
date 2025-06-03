@@ -1,0 +1,209 @@
+// SASS color module now imported via quasar.config.js additionalData
+// src/css/_variables.scss
+
+// AstroYOLO Color Palette - 完全基于light-mc.css的亮色主题
+// Reference: /home/mengjunyu/Astroyolo-frontend/css/light-mc.css
+
+// ---- Material Design 3 Light Color Palette ----
+// 严格遵循light-mc.css中的颜色定义
+
+// 核心颜色 - Core Colors
+$primary: rgb(19, 54, 101);            // --md-sys-color-primary
+$secondary: rgb(46, 54, 71);           // --md-sys-color-secondary
+$tertiary: rgb(69, 46, 74);            // --md-sys-color-tertiary
+$error: rgb(116, 0, 6);                // --md-sys-color-error
+
+// 表面颜色 - Surface Colors
+$surface-tint: rgb(65, 95, 145);       // --md-sys-color-surface-tint
+$surface: rgb(249, 249, 255);          // --md-sys-color-surface
+$surface-variant: rgb(224, 226, 236);  // --md-sys-color-surface-variant
+$background: rgb(249, 249, 255);       // --md-sys-color-background
+
+// 容器颜色 - Container Colors
+$primary-container: rgb(80, 109, 160); // --md-sys-color-primary-container
+$secondary-container: rgb(100, 109, 128); // --md-sys-color-secondary-container
+$tertiary-container: rgb(127, 100, 132); // --md-sys-color-tertiary-container
+$error-container: rgb(207, 44, 39);     // --md-sys-color-error-container
+
+// 表面容器 - Surface Containers
+$surface-container-lowest: rgb(255, 255, 255); // --md-sys-color-surface-container-lowest
+$surface-container-low: rgb(243, 243, 250);   // --md-sys-color-surface-container-low
+$surface-container: rgb(231, 232, 238);       // --md-sys-color-surface-container
+$surface-container-high: rgb(220, 220, 227);  // --md-sys-color-surface-container-high
+$surface-container-highest: rgb(209, 209, 216); // --md-sys-color-surface-container-highest
+
+// ---- 文本颜色 - Text Colors ----
+$on-primary: rgb(255, 255, 255);           // --md-sys-color-on-primary
+$on-secondary: rgb(255, 255, 255);         // --md-sys-color-on-secondary
+$on-tertiary: rgb(255, 255, 255);          // --md-sys-color-on-tertiary
+$on-error: rgb(255, 255, 255);             // --md-sys-color-on-error
+
+$on-primary-container: rgb(255, 255, 255);  // --md-sys-color-on-primary-container
+$on-secondary-container: rgb(255, 255, 255); // --md-sys-color-on-secondary-container
+$on-tertiary-container: rgb(255, 255, 255); // --md-sys-color-on-tertiary-container
+$on-error-container: rgb(255, 255, 255);    // --md-sys-color-on-error-container
+
+$on-background: rgb(25, 28, 32);           // --md-sys-color-on-background
+$on-surface: rgb(15, 17, 22);              // --md-sys-color-on-surface
+$on-surface-variant: rgb(51, 54, 62);      // --md-sys-color-on-surface-variant
+
+// ---- 边框和轮廓 - Borders & Outlines ----
+$outline: rgb(79, 82, 90);                  // --md-sys-color-outline
+$outline-variant: rgb(106, 109, 117);       // --md-sys-color-outline-variant
+
+// ---- 反色和固定颜色 - Inverse & Fixed Colors ----
+$inverse-surface: rgb(46, 48, 54);          // --md-sys-color-inverse-surface
+$inverse-on-surface: rgb(240, 240, 247);    // --md-sys-color-inverse-on-surface
+$inverse-primary: rgb(170, 199, 255);       // --md-sys-color-inverse-primary
+
+// ---- 阴影和背景 - Shadows & Backgrounds ----
+$shadow: rgb(0, 0, 0);                      // --md-sys-color-shadow
+$scrim: rgb(0, 0, 0);                       // --md-sys-color-scrim
+$surface-dim: rgb(197, 198, 205);           // --md-sys-color-surface-dim
+$surface-bright: rgb(249, 249, 255);        // --md-sys-color-surface-bright
+
+// ---- 功能性颜色映射 - Functional Color Mappings ----
+// 为了保持兼容性，映射新颜色到原有变量
+$app-background: $background;                // 主应用背景
+$card-background: $surface-container-lowest; // 卡片背景
+$subtle-background: $surface-container-low;  // 次要背景
+$hover-background: rgba($primary, 0.08);     // 悬停效果背景
+
+// 文本映射
+$text-primary: $on-background;               // 主要文本颜色
+$text-secondary: $on-surface-variant;        // 次要文本颜色
+$text-on-primary-color: $on-primary;         // 主色上的文本
+$text-on-secondary-color: $on-secondary;     // 次色上的文本
+$text-on-accent-color: $on-tertiary;         // 强调色上的文本
+$text-disabled: rgba($on-background, 0.38);  // 禁用状态文本
+
+// 边框颜色映射
+$border-color: $outline-variant;             // 通用边框颜色
+$light-border-color: $surface-variant;       // 轻量级边框颜色
+
+// ---- Quasar兼容变量 - Quasar Compatibility Variables ----
+// 这些变量需要保留以确保与Quasar框架兼容
+$dark: $inverse-surface;                     // 深色背景
+$dark-page: $inverse-surface;                // 深色页面背景
+$accent: $tertiary;                          // Quasar强调色，映射到三级颜色
+
+// 状态颜色 - Status Colors
+$positive: $primary-container;                 // --md-sys-color-primary-container
+$negative: $error;                           // 错误状态色
+$info: $surface-tint;                        // 信息状态色 - 使用surface-tint
+$warning: $error-container;                  // 警告状态色
+
+// Deep Space Gradient Colors for Glassmorphism Background
+$deep-space-start: rgb(19, 54, 101);    // From --md-sys-color-primary
+$deep-space-end: rgb(46, 54, 71);      // From --md-sys-color-secondary
+
+// ---- Astroyolo特定语义颜色 - Astroyolo Specific Semantic Colors ----
+// 这些颜色用于custom-colors.css中的特定元素
+$astroyolo-primary: $primary;
+$astroyolo-secondary: $secondary;
+$astroyolo-accent: $tertiary;
+
+// 容器背景颜色 - 统一使用light-mc.css中的颜色
+$astroyolo-primary-container-bg: $surface-container-low;     // 使用surface-container-low
+$astroyolo-secondary-container-bg: $surface-container;       // 使用surface-container
+$astroyolo-tertiary-container-bg: $surface-container-high;   // 使用surface-container-high
+
+// 文本颜色
+$astroyolo-text-dark: $on-background;
+$astroyolo-text-light: $inverse-on-surface;
+$astroyolo-bright-blue: $inverse-primary;
+
+// ---- CSS Custom Properties for Global Use ----
+// Define these so they can be accessed via var(--variable-name) in component <style> or inline styles.
+:root {
+  // Primary Colors
+  --astroyolo-primary: #{$primary};
+  --astroyolo-rgb-primary: #{color.channel($primary, 'red')}, #{color.channel($primary, 'green')}, #{color.channel($primary, 'blue')};
+  --astroyolo-on-primary: #{$on-primary};
+  --astroyolo-rgb-on-primary: #{color.channel($on-primary, 'red')}, #{color.channel($on-primary, 'green')}, #{color.channel($on-primary, 'blue')};
+  --astroyolo-primary-container: #{$primary-container};
+  --astroyolo-rgb-primary-container: #{color.channel($primary-container, 'red')}, #{color.channel($primary-container, 'green')}, #{color.channel($primary-container, 'blue')};
+  --astroyolo-on-primary-container: #{$on-primary-container};
+  --astroyolo-rgb-on-primary-container: #{color.channel($on-primary-container, 'red')}, #{color.channel($on-primary-container, 'green')}, #{color.channel($on-primary-container, 'blue')};
+
+  // Secondary Colors
+  --astroyolo-secondary: #{$secondary};
+  --astroyolo-rgb-secondary: #{color.channel($secondary, 'red')}, #{color.channel($secondary, 'green')}, #{color.channel($secondary, 'blue')};
+  --astroyolo-on-secondary: #{$on-secondary};
+  --astroyolo-rgb-on-secondary: #{color.channel($on-secondary, 'red')}, #{color.channel($on-secondary, 'green')}, #{color.channel($on-secondary, 'blue')};
+  --astroyolo-secondary-container: #{$secondary-container};
+  --astroyolo-rgb-secondary-container: #{color.channel($secondary-container, 'red')}, #{color.channel($secondary-container, 'green')}, #{color.channel($secondary-container, 'blue')};
+  --astroyolo-on-secondary-container: #{$on-secondary-container};
+  --astroyolo-rgb-on-secondary-container: #{color.channel($on-secondary-container, 'red')}, #{color.channel($on-secondary-container, 'green')}, #{color.channel($on-secondary-container, 'blue')};
+
+  // Tertiary Colors
+  --astroyolo-tertiary: #{$tertiary};
+  --astroyolo-rgb-tertiary: #{color.channel($tertiary, 'red')}, #{color.channel($tertiary, 'green')}, #{color.channel($tertiary, 'blue')};
+  --astroyolo-on-tertiary: #{$on-tertiary};
+  --astroyolo-rgb-on-tertiary: #{color.channel($on-tertiary, 'red')}, #{color.channel($on-tertiary, 'green')}, #{color.channel($on-tertiary, 'blue')};
+  --astroyolo-tertiary-container: #{$tertiary-container};
+  --astroyolo-rgb-tertiary-container: #{color.channel($tertiary-container, 'red')}, #{color.channel($tertiary-container, 'green')}, #{color.channel($tertiary-container, 'blue')};
+  --astroyolo-on-tertiary-container: #{$on-tertiary-container};
+  --astroyolo-rgb-on-tertiary-container: #{color.channel($on-tertiary-container, 'red')}, #{color.channel($on-tertiary-container, 'green')}, #{color.channel($on-tertiary-container, 'blue')};
+
+  // Error Colors
+  --astroyolo-error: #{$error};
+  --astroyolo-rgb-error: #{color.channel($error, 'red')}, #{color.channel($error, 'green')}, #{color.channel($error, 'blue')};
+  --astroyolo-on-error: #{$on-error};
+  --astroyolo-rgb-on-error: #{color.channel($on-error, 'red')}, #{color.channel($on-error, 'green')}, #{color.channel($on-error, 'blue')};
+  --astroyolo-error-container: #{$error-container};
+  --astroyolo-rgb-error-container: #{color.channel($error-container, 'red')}, #{color.channel($error-container, 'green')}, #{color.channel($error-container, 'blue')};
+  --astroyolo-on-error-container: #{$on-error-container};
+  --astroyolo-rgb-on-error-container: #{color.channel($on-error-container, 'red')}, #{color.channel($on-error-container, 'green')}, #{color.channel($on-error-container, 'blue')};
+
+  // Background and Surface Colors
+  --astroyolo-background: #{$background};
+  --astroyolo-rgb-background: #{color.channel($background, 'red')}, #{color.channel($background, 'green')}, #{color.channel($background, 'blue')};
+  --astroyolo-on-background: #{$on-background};
+  --astroyolo-rgb-on-background: #{color.channel($on-background, 'red')}, #{color.channel($on-background, 'green')}, #{color.channel($on-background, 'blue')};
+  
+  --astroyolo-surface: #{$surface};
+  --astroyolo-rgb-surface: #{color.channel($surface, 'red')}, #{color.channel($surface, 'green')}, #{color.channel($surface, 'blue')};
+  --astroyolo-on-surface: #{$on-surface};
+  --astroyolo-rgb-on-surface: #{color.channel($on-surface, 'red')}, #{color.channel($on-surface, 'green')}, #{color.channel($on-surface, 'blue')};
+  
+  --astroyolo-surface-variant: #{$surface-variant};
+  --astroyolo-rgb-surface-variant: #{color.channel($surface-variant, 'red')}, #{color.channel($surface-variant, 'green')}, #{color.channel($surface-variant, 'blue')};
+  --astroyolo-on-surface-variant: #{$on-surface-variant};
+  --astroyolo-rgb-on-surface-variant: #{color.channel($on-surface-variant, 'red')}, #{color.channel($on-surface-variant, 'green')}, #{color.channel($on-surface-variant, 'blue')};
+
+  --astroyolo-surface-container-lowest: #{$surface-container-lowest};
+  --astroyolo-rgb-surface-container-lowest: #{color.channel($surface-container-lowest, 'red')}, #{color.channel($surface-container-lowest, 'green')}, #{color.channel($surface-container-lowest, 'blue')};
+  --astroyolo-surface-container-low: #{$surface-container-low};
+  --astroyolo-rgb-surface-container-low: #{color.channel($surface-container-low, 'red')}, #{color.channel($surface-container-low, 'green')}, #{color.channel($surface-container-low, 'blue')};
+  --astroyolo-surface-container: #{$surface-container};
+  --astroyolo-rgb-surface-container: #{color.channel($surface-container, 'red')}, #{color.channel($surface-container, 'green')}, #{color.channel($surface-container, 'blue')};
+  --astroyolo-surface-container-high: #{$surface-container-high};
+  --astroyolo-rgb-surface-container-high: #{color.channel($surface-container-high, 'red')}, #{color.channel($surface-container-high, 'green')}, #{color.channel($surface-container-high, 'blue')};
+  --astroyolo-surface-container-highest: #{$surface-container-highest};
+  --astroyolo-rgb-surface-container-highest: #{color.channel($surface-container-highest, 'red')}, #{color.channel($surface-container-highest, 'green')}, #{color.channel($surface-container-highest, 'blue')};
+
+  // Outline Colors
+  --astroyolo-outline: #{$outline};
+  --astroyolo-rgb-outline: #{color.channel($outline, 'red')}, #{color.channel($outline, 'green')}, #{color.channel($outline, 'blue')};
+  --astroyolo-outline-variant: #{$outline-variant};
+  --astroyolo-rgb-outline-variant: #{color.channel($outline-variant, 'red')}, #{color.channel($outline-variant, 'green')}, #{color.channel($outline-variant, 'blue')};
+
+  // Inverse Colors
+  --astroyolo-inverse-surface: #{$inverse-surface};
+  --astroyolo-rgb-inverse-surface: #{color.channel($inverse-surface, 'red')}, #{color.channel($inverse-surface, 'green')}, #{color.channel($inverse-surface, 'blue')};
+  --astroyolo-inverse-on-surface: #{$inverse-on-surface};
+  --astroyolo-rgb-inverse-on-surface: #{color.channel($inverse-on-surface, 'red')}, #{color.channel($inverse-on-surface, 'green')}, #{color.channel($inverse-on-surface, 'blue')};
+  --astroyolo-inverse-primary: #{$inverse-primary};
+  --astroyolo-rgb-inverse-primary: #{color.channel($inverse-primary, 'red')}, #{color.channel($inverse-primary, 'green')}, #{color.channel($inverse-primary, 'blue')};
+
+  // Utility Text Variables for CSS
+  --astroyolo-text-primary: #{$text-primary};
+  --astroyolo-text-secondary: #{$text-secondary};
+  --astroyolo-text-tertiary: var(--astroyolo-on-surface-variant); // Example, can be more specific
+  --astroyolo-text-disabled: #{$text-disabled};
+
+  // Tooltip specific, if needed (using surface and on-surface as base)
+  --astroyolo-tooltip-bg: var(--astroyolo-surface-container-high);
+  --astroyolo-tooltip-text: var(--astroyolo-on-surface-variant);
+}

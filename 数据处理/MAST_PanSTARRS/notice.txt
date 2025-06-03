@@ -1,0 +1,117 @@
+合成g，i，y波段到彩色图像的时候偏黄
+这是因为 make_lupton_rgb() 默认使用线性拉伸方式将每个波段做了比例缩放，在多数天文图像中，如果不做 背景裁剪/归一化/伽马变换，亮星会主导整个图像，导致背景发白或偏黄。
+
+而 Pan-STARRS 官网 在合成彩图时，使用了非常定制化的流程，包括：
+	•	天体去除背景（背景建模）
+	•	arcsinh（非线性）拉伸
+	•	颜色白平衡调整（通过参考星等表校正）
+	•	gamma 变换 & clipping
+	•	黑背景渲染
+	•	颜色白平衡调整（通过参考星等表校正）
+	•	gamma 变换 & clipping
+	•	黑背景渲染
+
+
+修改版本：
+支持 arcsinh 拉伸、黑背景、自动色阶
+
+| 参数                 | 推荐值           | 说明                 |
+| ------------------ | ------------- | ------------------ |
+| `Q`                | `10`          | 对比度增强因子            |
+| `stretch`          | `5`           | 拉伸因子，控制亮源亮度        |
+| `clip_percent`     | `(0.5, 99.5)` | 去除极暗极亮异常值          |
+| `use_arcsinh`      | `True`        | 更自然地拉伸 faint 星系    |
+| `black_background` | `True`        | 将背景像素压暗为黑色，效果更接近官网 |
+
+def combine_rgb(
+    fits_y, fits_i, fits_g,
+    output_path='rgb_output.png',
+    Q=10, stretch=5,
+    use_arcsinh=False,
+    clip_percent=(0.5, 99.5),
+    black_background=True
+):
+    """
+    合成 Pan-STARRS 风格的 RGB 图像（Y-I-G → R-G-B）
+
+    参数：
+        fits_y, fits_i, fits_g : str
+            分别为 y, i, g 波段的 FITS 文件路径
+        output_path : str
+            输出 PNG 文件路径
+        Q, stretch : float
+            控制对比度和亮度，传递给 make_lupton_rgb
+        use_arcsinh : bool
+            是否使用 arcsinh 拉伸代替线性
+        clip_percent : tuple(float, float)
+            用于标准化图像的百分位剪裁范围
+        black_background : bool
+            是否自动将背景区域设为纯黑
+    """
+    try:
+        # 读取并转换为 float
+        img_r = fits.getdata(fits_y).astype(np.float64)  # 红色通道
+        img_g = fits.getdata(fits_i).astype(np.float64)  # 绿色通道
+        img_b = fits.getdata(fits_g).astype(np.float64)  # 蓝色通道
+
+        # 背景标准化函数（使用百分位剪裁）
+        def normalize(img, pmin=0.5, pmax=99.5):
+            vmin, vmax = np.percentile(img, (pmin, pmax))
+            img = np.clip((img - vmin) / (vmax - vmin), 0, 1)
+            return img
+
+        # normalize 各通道
+        img_r = normalize(img_r, *clip_percent)
+        img_g = normalize(img_g, *clip_percent)
+        img_b = normalize(img_b, *clip_percent)
+
+        if use_arcsinh:
+            img_r = np.arcsinh(img_r)
+            img_g = np.arcsinh(img_g)
+            img_b = np.arcsinh(img_b)
+
+        # RGB 合成
+        rgb = make_lupton_rgb(img_r, img_g, img_b, Q=Q, stretch=stretch)
+
+        # 可选：将极暗区域设为纯黑
+        if black_background:
+            mask = (img_r + img_g + img_b) < 0.05
+            rgb[mask] = 0
+
+        # 保存图像
+        plt.figure(figsize=(6, 6))
+        plt.imshow(rgb, origin='lower')
+        plt.axis('off')
+        plt.savefig(output_path, bbox_inches='tight', pad_inches=0)
+        plt.close()
+        print(f"[✓] Saved RGB image: {output_path}")
+
+    except Exception as e:
+        print(f"[X] Failed to generate RGB image: {e}")
+
+if all(b in fits_paths for b in ['y', 'i', 'g']):
+    rgb_path = os.path.join(image_dir, f"{object_id}_RGB.png")
+    combine_rgb(
+        fits_y=fits_paths['y'],  # Red
+        fits_i=fits_paths['i'],  # Green
+        fits_g=fits_paths['g'],  # Blue
+        output_path=rgb_path,
+        Q=15,
+        stretch=2,
+        use_arcsinh=False,
+        black_background=False
+    )
+
+注意：但发现问题，生成的合成图全为黑色
+    通过检查单个 FITS 的像素值范围，得到三个波段数据的数值分布（是否都是极小值或 NaN）：
+    理想情况： 最大值 >1000，平均值几百以上。
+    [G] min=17238.20, max=357035.72, mean=37395.75
+    [R] min=42573.28, max=778676.88, mean=102038.45
+    [I] min=99855.12, max=2304846.00, mean=225371.44
+    [Z] min=61491.94, max=854374.94, mean=150571.50
+    [Y] min=83606.78, max=1915131.88, mean=212862.31
+    这说明图像非常亮，甚至可能过曝，如果你再用 Q=8, stretch=4 这样的参数进行合成，结果就是——
+    图像整体亮度超出动态范围，经过非线性拉伸后接近0（全黑）或全白（纯色）。
+
+
+    APLpy 已经不再活跃维护，使用 astropy.visualization + WCSAxes 是官方推荐的替代方案

@@ -1,0 +1,211 @@
+// SASS color module now imported via quasar.config.js additionalData
+// Import @fontsource fonts
+@import '@fontsource/rajdhani/300.css'; // Light
+@import '@fontsource/rajdhani/400.css'; // Regular
+@import '@fontsource/rajdhani/500.css'; // Medium
+@import '@fontsource/rajdhani/600.css'; // SemiBold
+@import '@fontsource/rajdhani/700.css'; // Bold
+
+@import '@fontsource/exo-2/100.css';  // Thin
+@import '@fontsource/exo-2/200.css';  // ExtraLight
+@import '@fontsource/exo-2/300.css';  // Light
+@import '@fontsource/exo-2/400.css';  // Regular
+@import '@fontsource/exo-2/500.css';  // Medium
+@import '@fontsource/exo-2/600.css';  // SemiBold
+@import '@fontsource/exo-2/700.css';  // Bold
+@import '@fontsource/exo-2/800.css';  // ExtraBold
+@import '@fontsource/exo-2/900.css';  // Black
+
+// Import SCSS variables
+@import 'variables';
+@import 'light-mc-definitions'; // Import the SCSS version of light-mc color definitions
+
+// Import custom colors - 统一配色方案
+@import './custom-colors.css';
+
+// app global css in SCSS form
+
+// 导入 light-mc.css 变量类
+:root {
+  @extend .light-medium-contrast;
+}
+
+// Body and Font settings
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: $background; // --md-sys-color-background
+  color: $on-background;  // --md-sys-color-on-background
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+// General heading styles
+h1, h2, h3, h4, h5, h6,
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
+  font-family: 'Roboto', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  color: $on-background; // --md-sys-color-on-background
+}
+
+// Basic link styling
+a {
+  color: $primary;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: $surface-tint; // --md-sys-color-surface-tint 悬停时使用表面色调
+  }
+}
+
+// Quasar component overrides
+.q-btn {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 500;
+  text-transform: none;
+  border-radius: 4px;
+  
+  &.q-btn--outline {
+    border: 1px solid $surface-tint; // --md-sys-color-surface-tint
+  }
+}
+
+// Utility classes
+.card-shadow {
+  box-shadow: 0 2px 12px rgba($shadow, 0.1); // --md-sys-color-shadow 使用阴影色
+}
+
+.card-border {
+  border: 1px solid $outline-variant; // --md-sys-color-outline-variant 边框色
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: $on-background; // --md-sys-color-on-background 文本色
+  margin-bottom: 16px;
+}
+
+// 全局组件样式
+.q-header {
+  background-color: $primary-container; // --md-sys-color-primary-container 深色主容器色
+}
+
+.q-drawer {
+  background-color: $surface; // --md-sys-color-surface 表面色
+}
+
+.q-page-container {
+  padding-top: 50px; // 为顶部导航栏留出空间
+}
+
+.q-card {
+  border-radius: 8px; // 更现代的圆角
+  box-shadow: 0 2px 8px rgba($shadow, 0.05); // --md-sys-color-shadow 更柔和的阴影
+  background-color: $surface-container-lowest; // --md-sys-color-surface-container-lowest 卡片背景
+  border: 1px solid $surface-variant; // --md-sys-color-surface-variant 边框色
+  color: $on-background; // --md-sys-color-on-background 文本色
+  
+  .q-card__section {
+    color: $on-background; // --md-sys-color-on-background 文本色
+  }
+}
+
+// 为统计卡片添加特殊样式 - 使用light-mc.css配色
+.stat-card {
+  &.blue-card {
+    background-color: $surface-container-low; // --md-sys-color-surface-container-low
+    color: $on-background; // --md-sys-color-on-background
+  }
+  &.green-card {
+    background-color: $surface-container; // --md-sys-color-surface-container
+    color: $on-background; // --md-sys-color-on-background
+  }
+  &.purple-card {
+    background-color: $surface-container-high; // --md-sys-color-surface-container-high
+    color: $on-background; // --md-sys-color-on-background
+  }
+  &.cyan-card {
+    background-color: $surface-container-low; // --md-sys-color-surface-container-low
+    color: $on-background; // --md-sys-color-on-background
+  }
+}
+
+// 滚动条样式
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $surface-container; // --md-sys-color-surface-container 浅色容器作为轨道背景
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $outline-variant; // --md-sys-color-outline-variant 轮廓变体颜色
+  border-radius: 4px;
+  
+  &:hover {
+    background: $outline; // --md-sys-color-outline 悬停时使用更深的轮廓颜色
+  }
+}
+
+// 页脚样式
+.app-footer {
+  padding: 20px 0;
+  background: $surface-container-low; // --md-sys-color-surface-container-low 浅色背景
+  text-align: center;
+  border-top: 1px solid $outline-variant; // --md-sys-color-outline-variant 边框色
+  margin-top: auto; // 保持页脚在底部
+
+  p {
+    margin: 0;
+    color: $on-surface-variant; // --md-sys-color-on-surface-variant 次要文本色
+  }
+
+  a {
+    color: $primary;
+    &:hover {
+      color: $surface-tint; // --md-sys-color-surface-tint 悬停使用表面色调
+    }
+  }
+}
+
+// 全局颜色覆盖，统一使用light-mc.css配色
+.text-grey-8 {
+  color: $on-surface-variant !important; // --md-sys-color-on-surface-variant
+}
+
+.text-primary {
+  color: $primary !important; // --md-sys-color-primary
+}
+
+.bg-primary {
+  background: $primary !important; // --md-sys-color-primary
+}
+
+.text-white {
+  color: $on-primary !important; // --md-sys-color-on-primary
+}
+
+.bg-white {
+  background: $surface-container-lowest !important; // --md-sys-color-surface-container-lowest
+}
+
+.bg-grey-1 {
+  background: $surface-container-low !important; // --md-sys-color-surface-container-low
+}
+
+.bg-blue-1 {
+  background: $surface-container-low !important; // --md-sys-color-surface-container-low
+}
+
+.bg-green-1 {
+  background: $surface-container !important; // --md-sys-color-surface-container
+}
+
+.bg-purple-1 {
+  background: $surface-container-high !important; // --md-sys-color-surface-container-high
+}

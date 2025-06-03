@@ -1,0 +1,58 @@
+/* 全局表格样式覆盖 */
+.q-table {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+.q-table th {
+  background-color: #f0f4f8 !important;
+  color: #133665 !important;
+}
+
+.q-table tr, .q-table td {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+.q-table__control, 
+.q-table__bottom, 
+.q-table__middle,
+.q-table__top,
+.q-table__grid-content {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+/* 覆盖任何带有黑色背景的组件 */
+.q-dark, 
+[class*="bg-dark"],
+[class*="bg-black"] {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+/* 搜索框组件 */
+.q-field__control {
+  background-color: #ffffff !important;
+}
+
+/* 确保对话框和所有卡片为白色 */
+.q-dialog__inner > div,
+.q-card {
+  background-color: #ffffff !important;
+}
+
+/* 表格分页部分 */
+.q-table__bottom {
+  background-color: #ffffff !important;
+}
+
+/* 表格头部 */
+.q-table thead {
+  background-color: #f0f4f8 !important;
+}
+
+/* 表格内容行 */
+.q-table tbody tr {
+  background-color: #ffffff !important;
+}

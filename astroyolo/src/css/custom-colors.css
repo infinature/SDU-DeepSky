@@ -1,0 +1,257 @@
+/* Astroyolo 自定义颜色 - 严格基于light-mc.css */
+
+/* ---- 核心颜色 ---- */
+
+/* 主色 - 对应 primary */
+.text-astroyolo-primary {
+  color: rgb(19, 54, 101) !important; /* --md-sys-color-primary */
+}
+.bg-astroyolo-primary {
+  background: rgb(19, 54, 101) !important; /* --md-sys-color-primary */
+}
+
+/* 次要色 - 对应 secondary */
+.text-astroyolo-secondary {
+  color: rgb(46, 54, 71) !important; /* --md-sys-color-secondary */
+}
+.bg-astroyolo-secondary {
+  background: rgb(46, 54, 71) !important; /* --md-sys-color-secondary */
+}
+
+/* 强调色 - 对应 tertiary */
+.text-astroyolo-accent, .text-astroyolo-tertiary {
+  color: rgb(69, 46, 74) !important; /* --md-sys-color-tertiary */
+}
+.bg-astroyolo-accent, .bg-astroyolo-tertiary {
+  background: rgb(69, 46, 74) !important; /* --md-sys-color-tertiary */
+}
+
+/* 错误色 - 对应 error */
+.text-astroyolo-error {
+  color: rgb(116, 0, 6) !important; /* --md-sys-color-error */
+}
+.bg-astroyolo-error {
+  background: rgb(116, 0, 6) !important; /* --md-sys-color-error */
+}
+
+/* ---- 表面颜色 ---- */
+
+/* 表面色调 - 对应 surface-tint */
+.text-astroyolo-surface-tint {
+  color: rgb(65, 95, 145) !important; /* --md-sys-color-surface-tint */
+}
+.bg-astroyolo-surface-tint {
+  background: rgb(65, 95, 145) !important; /* --md-sys-color-surface-tint */
+}
+
+/* 背景色 - 对应 background */
+.text-astroyolo-bg {
+  color: rgb(249, 249, 255) !important; /* --md-sys-color-background */
+}
+.bg-astroyolo-bg {
+  background: rgb(249, 249, 255) !important; /* --md-sys-color-background */
+}
+
+/* 表面色 - 对应 surface */
+.text-astroyolo-surface {
+  color: rgb(249, 249, 255) !important; /* --md-sys-color-surface */
+}
+.bg-astroyolo-surface {
+  background: rgb(249, 249, 255) !important; /* --md-sys-color-surface */
+}
+
+/* ---- 容器颜色 ---- */
+
+/* 主色容器 - 对应 primary-container */
+.text-astroyolo-primary-container {
+  color: rgb(80, 109, 160) !important; /* --md-sys-color-primary-container */
+}
+.bg-astroyolo-primary-container {
+  background: rgb(80, 109, 160) !important; /* --md-sys-color-primary-container */
+}
+
+/* 次色容器 - 对应 secondary-container */
+.text-astroyolo-secondary-container {
+  color: rgb(100, 109, 128) !important; /* --md-sys-color-secondary-container */
+}
+.bg-astroyolo-secondary-container {
+  background: rgb(100, 109, 128) !important; /* --md-sys-color-secondary-container */
+}
+
+/* 强调色容器 - 对应 tertiary-container */
+.text-astroyolo-tertiary-container {
+  color: rgb(127, 100, 132) !important; /* --md-sys-color-tertiary-container */
+}
+.bg-astroyolo-tertiary-container {
+  background: rgb(127, 100, 132) !important; /* --md-sys-color-tertiary-container */
+}
+
+/* 错误色容器 - 对应 error-container */
+.text-astroyolo-error-container {
+  color: rgb(207, 44, 39) !important; /* --md-sys-color-error-container */
+}
+.bg-astroyolo-error-container {
+  background: rgb(207, 44, 39) !important; /* --md-sys-color-error-container */
+}
+
+/* ---- 表面容器 ---- */
+
+/* 表面容器最低层 - 卡片背景 */
+.bg-astroyolo-card, .bg-astroyolo-surface-container-lowest {
+  background: rgb(255, 255, 255) !important; /* --md-sys-color-surface-container-lowest */
+}
+
+/* 表面容器低层 */
+.bg-astroyolo-surface-container-low {
+  background: rgb(243, 243, 250) !important; /* --md-sys-color-surface-container-low */
+}
+
+/* 表面容器 */
+.bg-astroyolo-surface-container {
+  background: rgb(231, 232, 238) !important; /* --md-sys-color-surface-container */
+}
+
+/* 表面容器高层 */
+.bg-astroyolo-surface-container-high {
+  background: rgb(220, 220, 227) !important; /* --md-sys-color-surface-container-high */
+}
+
+/* 表面容器最高层 */
+.bg-astroyolo-surface-container-highest {
+  background: rgb(209, 209, 216) !important; /* --md-sys-color-surface-container-highest */
+}
+
+/* ---- 文本颜色 ---- */
+
+/* 主色上的文本 */
+.text-on-astroyolo-primary {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-primary */
+}
+
+/* 次色上的文本 */
+.text-on-astroyolo-secondary {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-secondary */
+}
+
+/* 强调色上的文本 */
+.text-on-astroyolo-tertiary {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-tertiary */
+}
+
+/* 错误色上的文本 */
+.text-on-astroyolo-error {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-error */
+}
+
+/* 主色容器上的文本 */
+.text-on-astroyolo-primary-container {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-primary-container */
+}
+
+/* 次色容器上的文本 */
+.text-on-astroyolo-secondary-container {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-secondary-container */
+}
+
+/* 强调色容器上的文本 */
+.text-on-astroyolo-tertiary-container {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-tertiary-container */
+}
+
+/* 错误色容器上的文本 */
+.text-on-astroyolo-error-container {
+  color: rgb(255, 255, 255) !important; /* --md-sys-color-on-error-container */
+}
+
+/* 背景上的文本 */
+.text-on-astroyolo-background {
+  color: rgb(25, 28, 32) !important; /* --md-sys-color-on-background */
+}
+
+/* 表面上的文本 */
+.text-on-astroyolo-surface {
+  color: rgb(15, 17, 22) !important; /* --md-sys-color-on-surface */
+}
+
+/* 表面变体上的文本 */
+.text-on-astroyolo-surface-variant {
+  color: rgb(51, 54, 62) !important; /* --md-sys-color-on-surface-variant */
+}
+
+/* ---- 特殊颜色 ---- */
+
+/* 亮蓝色 - 对应 inverse-primary */
+.text-astroyolo-bright, .text-astroyolo-inverse-primary {
+  color: rgb(170, 199, 255) !important; /* --md-sys-color-inverse-primary */
+}
+.bg-astroyolo-bright, .bg-astroyolo-inverse-primary {
+  background: rgb(170, 199, 255) !important; /* --md-sys-color-inverse-primary */
+}
+
+/* 表面变体颜色 */
+.text-astroyolo-surface-variant {
+  color: rgb(224, 226, 236) !important; /* --md-sys-color-surface-variant */
+}
+.bg-astroyolo-surface-variant {
+  background: rgb(224, 226, 236) !important; /* --md-sys-color-surface-variant */
+}
+
+/* 轮廓颜色 */
+.text-astroyolo-outline {
+  color: rgb(79, 82, 90) !important; /* --md-sys-color-outline */
+}
+.border-astroyolo-outline {
+  border-color: rgb(79, 82, 90) !important; /* --md-sys-color-outline */
+}
+
+/* 轮廓变体颜色 */
+.text-astroyolo-outline-variant {
+  color: rgb(106, 109, 117) !important; /* --md-sys-color-outline-variant */
+}
+.border-astroyolo-outline-variant {
+  border-color: rgb(106, 109, 117) !important; /* --md-sys-color-outline-variant */
+}
+
+/* 轻量级边框颜色 */
+.border-astroyolo-light {
+  border-color: rgb(224, 226, 236) !important; /* --md-sys-color-surface-variant */
+}
+
+/* ---- 文本语义颜色 ---- */
+
+/* 主要文本颜色 */
+.text-astroyolo-text-dark, .text-astroyolo-text-primary {
+  color: rgb(25, 28, 32) !important; /* --md-sys-color-on-background */
+}
+
+/* 次要文本颜色 */
+.text-astroyolo-text-secondary {
+  color: rgb(51, 54, 62) !important; /* --md-sys-color-on-surface-variant */
+}
+
+/* 亮色文本 */
+.text-astroyolo-text-light {
+  color: rgb(240, 240, 247) !important; /* --md-sys-color-inverse-on-surface */
+}
+
+/* 禁用文本 */
+.text-astroyolo-text-disabled {
+  color: rgba(25, 28, 32, 0.38) !important; /* 主文本的38%透明度 */
+}
+
+/* ---- 统一浅色容器类 ---- */
+
+/* 浅色主色容器背景 - 使用 surface-container-low */
+.bg-astroyolo-primary-container-light, .bg-blue-1 {
+  background: rgb(243, 243, 250) !important; /* --md-sys-color-surface-container-low */
+}
+
+/* 浅色次色容器背景 - 使用 surface-container */
+.bg-astroyolo-secondary-container-light, .bg-green-1 {
+  background: rgb(231, 232, 238) !important; /* --md-sys-color-surface-container */
+}
+
+/* 浅色强调色容器背景 - 使用 surface-container-high */
+.bg-astroyolo-tertiary-container-light, .bg-purple-1 {
+  background: rgb(220, 220, 227) !important; /* --md-sys-color-surface-container-high */
+}
