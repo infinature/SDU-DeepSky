@@ -9,10 +9,10 @@
           round
           :icon="drawer ? 'menu_open' : 'menu'"
           @click="drawer = !drawer"
-          class="q-mr-sm menu-btn"
+          class="q-mr-sm menu-btn text-white"
         />
         <q-toolbar-title class="text-white">
-          SDU-DeepSky - MSTAR
+          SDU-DeepSky - MSPC-Net
         </q-toolbar-title>
         <div class="text-white">SDU</div>
       </q-toolbar>

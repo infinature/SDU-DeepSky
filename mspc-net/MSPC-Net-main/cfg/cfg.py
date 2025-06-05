@@ -23,7 +23,7 @@ cfg = {
     "in_channel": 1,
     # dataset params
     "num_classes": 7,
-    "data_dir": "E:\\2025-undergrad-astro-frontend-mengjunyu\\mspc-net\\kfold_0",
+    "data_dir": "E:\SDU-DeepSky\mspc-net\kfold_0",
     "class_names": "O,B,A,F,G,K,M",
     "spectrum_length": 3584,
     # log params
