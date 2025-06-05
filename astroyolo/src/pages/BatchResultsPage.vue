@@ -18,7 +18,7 @@
       <div class="left-panel">
         <q-scroll-area class="fit">
           <div class="panel-content">
-            <div class="section-title text-h5 q-mb-lg">天文图像检测结果管理</div>
+            <div class="section-title text-h5 q-mb-lg" style="color: white !important;">天文图像检测结果管理</div>
 
             <div v-if="loading" class="text-center q-pa-md section-wrapper">
               <q-spinner
@@ -723,7 +723,7 @@ async function downloadResults() {
 .section-title {
   font-size: 1.5rem; // text-h5
   font-weight: 600;
-  color: var(--md-sys-color-on-surface-variant);
+  color: white !important;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid rgba(0,0,0,0.05);
