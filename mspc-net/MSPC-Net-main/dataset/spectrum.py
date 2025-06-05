@@ -29,38 +29,27 @@ class SpectrumDataset(Dataset):
         """
         super().__init__()
         self.data_dir = data_dir
-        # 调整路径以适应实际数据结构
         self.spectrum_length = spectrum_length
         self.class_names = class_names
         self.spectrum_suffix = spectrum_suffix
-        
-        # 检查数据目录中的文件
-        print(f"正在检查数据目录: {data_dir}")
-        print(f"当前工作目录: {os.getcwd()}")
-        print(f"路径是否存在: {os.path.exists(data_dir)}")
-        print(f"路径是目录: {os.path.isdir(data_dir)}")
-        
-        # 尝试规范化路径
-        data_dir = os.path.abspath(data_dir)
-        print(f"规范化后的路径: {data_dir}")
-        
-        files = os.listdir(data_dir)
-        print(f"发现文件: {files}")
-        
-        # 使用第一个fold文件作为数据源
-        fold_file = None
-        for file in files:
-            if file.startswith("fold_") and file.endswith(".csv"):
-                fold_file = file
-                break
-        
-        if fold_file is None:
-            raise FileNotFoundError(f"在 {data_dir} 中没有找到fold_*.csv文件")
-            
-        print(f"使用数据文件: {fold_file}")
-        # 加载第一个fold文件
-        self.label = pd.read_csv(os.path.join(data_dir, fold_file))
-        
+
+        # self.data_dir (assigned from the data_dir parameter) is the full path to a label.csv file.
+        # Example: E:\...\kfold_0\train\label\label.csv
+        # os.path.dirname(self.data_dir) is E:\...\kfold_0\train\label
+        # os.path.dirname(os.path.dirname(self.data_dir)) is E:\...\kfold_0\train
+        self.spectrum_files_base_dir = os.path.join(os.path.dirname(os.path.dirname(self.data_dir)), "spectrum")
+
+        # Print info about the label file and spectrum directory
+        print(f"正在处理标签文件: {self.data_dir}")
+        print(f"标签文件是否存在: {os.path.exists(self.data_dir)}")
+        print(f"光谱文件实际目录: {self.spectrum_files_base_dir}")
+        if not (os.path.exists(self.spectrum_files_base_dir) and os.path.isdir(self.spectrum_files_base_dir)):
+            print(f"警告: 光谱文件目录 {self.spectrum_files_base_dir} 不存在或不是一个目录。")
+
+        # Load the label CSV file directly
+        self.label = pd.read_csv(self.data_dir)
+
+
         # 确保label列存在
         if "label" not in self.label.columns:
             # 如果没有label列，尝试创建一个
@@ -80,7 +69,7 @@ class SpectrumDataset(Dataset):
         
 
         print("=" * 20)
-        print(f'dataset: {data_dir.split("/")[-1]}')
+        print(f'dataset: {os.path.basename(os.path.dirname(self.spectrum_files_base_dir))}')
         for label in self.class_names:
             label_count = len(self.label[self.label["label"] == label])
             print(f"{label}: {label_count}")
@@ -99,7 +88,7 @@ class SpectrumDataset(Dataset):
         if self.spectrum_suffix == ".csv":
             spec = np.loadtxt(
                 os.path.join(
-                    self.spectrum_dir,
+                    self.spectrum_files_base_dir,
                     self.label["basename"].values[index] + self.spectrum_suffix,
                 ),
                 delimiter=",",
@@ -108,7 +97,7 @@ class SpectrumDataset(Dataset):
         elif self.spectrum_suffix == ".npy":
             spec = np.load(
                 os.path.join(
-                    self.spectrum_dir,
+                    self.spectrum_files_base_dir,
                     self.label["basename"].values[index] + self.spectrum_suffix,
                 )
             )

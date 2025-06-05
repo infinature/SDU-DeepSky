@@ -12,14 +12,15 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary   : #1976D2;
-$secondary : #26A69A;
-$accent    : #9C27B0;
+// 根据 light-mc.css 中的亮色配色方案更新
+$primary   : rgb(19, 54, 101);    // --md-sys-color-primary
+$secondary : rgb(46, 54, 71);     // --md-sys-color-secondary
+$accent    : rgb(69, 46, 74);     // --md-sys-color-tertiary
 
-$dark      : #1D1D1D;
-$dark-page : #121212;
+$dark      : rgb(25, 28, 32);     // --md-sys-color-on-background
+$dark-page : rgb(46, 48, 54);     // --md-sys-color-inverse-surface
 
-$positive  : #21BA45;
-$negative  : #C10015;
-$info      : #31CCEC;
-$warning   : #F2C037;
+$positive  : rgb(60, 100, 60);    // 自定义成功状态色
+$negative  : rgb(116, 0, 6);      // --md-sys-color-error
+$info      : rgb(55, 85, 134);    // --md-sys-color-primary-fixed-dim
+$warning   : rgb(207, 44, 39);    // --md-sys-color-error-container

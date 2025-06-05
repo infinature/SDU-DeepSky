@@ -7,7 +7,7 @@ const routes = [
       { path: 'desi', component: () => import('pages/DESIPage.vue') },
       { path: 'jplus', component: () => import('pages/JPlusPage.vue') },
       { path: 'panstarrs', component: () => import('pages/PanSTARRSPage.vue') },
-      { path: 'files', component: () => import('pages/FilesPage.vue') }
+      { path: 'files', component: () => import('../pages/FilesPage.vue') }
     ]
   },
 

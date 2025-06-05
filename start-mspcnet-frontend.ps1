@@ -1,5 +1,5 @@
 # MSPC-Net前端启动脚本
-$ROOT_DIR = "e:\2025-undergrad-astro-frontend-mengjunyu"
+$ROOT_DIR = "e:\SDU-DeepSky"
 $PORT = 8081
 
 Write-Host "开始启动MSPC-Net前端..." -ForegroundColor Green

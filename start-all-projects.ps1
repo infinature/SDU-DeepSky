@@ -2,7 +2,7 @@
 # 此脚本将启动所有三个项目的前端和后端服务
 
 # 设置项目根目录
-$ROOT_DIR = "e:\2025-undergrad-astro-frontend-mengjunyu"
+$ROOT_DIR = "e:\SDU-DeepSky"
 
 # 设置端口配置
 $PORTS = @{
@@ -209,9 +209,12 @@ Start-Process powershell -ArgumentList "-Command", "& '$ROOT_DIR\start-mstar-fro
 Write-Host "正在启动数据处理前端服务 (端口$($PORTS["data_processing_frontend"]))..." -ForegroundColor Green
 $dataProcessingFrontendScript = @"
 cd '$ROOT_DIR\数据处理\astro_data_portal\frontend'
-Write-Host '准备启动数据处理前端 (端口$($PORTS["data_processing_frontend"]))...请稍候，首次启动可能需要一些时间。' -ForegroundColor Yellow
+Write-Host '正在清理数据处理前端的旧构建 (quasar clean)...' -ForegroundColor Yellow
+quasar clean
+Write-Host '正在为数据处理前端重新安装依赖 (npm install)...' -ForegroundColor Yellow
 npm install
-npm run dev -- --port $($PORTS["data_processing_frontend"]) --host 0.0.0.0
+Write-Host '准备启动数据处理前端 (npm run dev)，服务将尝试在默认端口 (通常是9000) 或可用端口启动...' -ForegroundColor Yellow
+npm run dev
 Read-Host '按回车键退出'
 "@
 Start-Process powershell -ArgumentList "-Command", $dataProcessingFrontendScript

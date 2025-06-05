@@ -42,18 +42,18 @@ def main():
     
     # 直接从配置中获取完整路径
     train_dataset = SpectrumDataset(
-        data_dir=cfg["data_dir"],
-        class_names=cfg["class_names"].split(","),
+        data_dir=os.path.join(cfg["data_dir"], "train", "label", "label.csv"),
+        class_names=cfg["class_names"] if isinstance(cfg["class_names"], list) else cfg["class_names"].split(","),
         spectrum_length=cfg["spectrum_length"],
     )
     val_dataset = SpectrumDataset(
-        data_dir=os.path.join(os.path.dirname(cfg["data_dir"]), "val"),
-        class_names=cfg["class_names"].split(","),
+        data_dir=os.path.join(cfg["data_dir"], "val", "label", "label.csv"),
+        class_names=cfg["class_names"] if isinstance(cfg["class_names"], list) else cfg["class_names"].split(","),
         spectrum_length=cfg["spectrum_length"],
     )
     test_dataset = SpectrumDataset(
-        data_dir=os.path.join(os.path.dirname(cfg["data_dir"]), "test"),
-        class_names=cfg["class_names"].split(","),
+        data_dir=os.path.join(cfg["data_dir"], "test", "label", "label.csv"),
+        class_names=cfg["class_names"] if isinstance(cfg["class_names"], list) else cfg["class_names"].split(","),
         spectrum_length=cfg["spectrum_length"],
     )
 

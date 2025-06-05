@@ -55,6 +55,15 @@ body {
     margin-bottom: 2rem;
 }
 
+/* Style for the English part of the hero title */
+.hero-section h1 span {
+    font-size: 2.2rem;  /* 比主标题的 3rem 略小 */
+    color: #ffffff;     /* 白色 */
+    font-weight: normal; /* 普通字重 */
+    display: block;     /* 确保其表现为块级元素，以便应用边距 */
+    margin-top: 0.3rem; /* 在中文标题下方增加少量间距 */
+}
+
 /* 全局样式 */
 * {
     margin: 0;
@@ -130,6 +139,7 @@ body {
 .top-nav.scrolled a {
     color: #333; /* 字体变色为深色 */
     padding: 0.4rem 0.8rem; /* 微调链接内边距 */
+    white-space: nowrap; /* 防止文字换行 */
 }
 
 .top-nav.scrolled a:hover,

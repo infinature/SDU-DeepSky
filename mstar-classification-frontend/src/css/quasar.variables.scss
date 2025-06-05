@@ -9,8 +9,8 @@
 //==================================================
 // Brand Colors
 //==================================================
-$primary   : #1976D2; // Example Primary Color (Material Blue)
-$secondary : #26A69A; // Example Secondary Color (Material Teal)
+$primary   : rgb(19, 54, 101); // Unified dark blue
+$secondary : rgb(46, 54, 71); // Example Secondary Color (Material Teal)
 $accent    : #9C27B0; // Example Accent Color (Material Purple)
 
 $dark      : #1D1D1D;
@@ -18,7 +18,7 @@ $dark-page : #121212;
 
 $positive  : #21BA45;
 $negative  : #C10015;
-$info      : #31CCEC;
+$info      : rgb(19, 54, 101);
 $warning   : #F2C037;
 
 //==================================================

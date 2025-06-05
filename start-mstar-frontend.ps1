@@ -1,5 +1,5 @@
 # MSTAR前端启动脚本
-$ROOT_DIR = "e:\2025-undergrad-astro-frontend-mengjunyu"
+$ROOT_DIR = "e:\SDU-DeepSky"
 $PORT = 8082
 
 Write-Host "开始启动MSTAR前端..." -ForegroundColor Green
