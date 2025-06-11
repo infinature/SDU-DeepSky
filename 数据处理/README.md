@@ -139,9 +139,9 @@ astro_data_portal/          # 项目根目录
 │   │   └── App.vue       # 主应用组件
 │   └── package.json      # 前端依赖
 └── README.md              # 项目说明文档（必需）
+test3.csv,test2.csv,test.csv分别是三个数据集下载的测试星表csv文件
 
-# 以下目录用于存储下载的数据，不是项目代码的一部分
-# 用户可以根据需要创建或使用其他目录
+# 以下目录用于是项目代码的一部分（即三个数据集下载原函数）
 DESI_download/             # DESI 数据存储目录（可选）
 J-PLUS/                   # J-PLUS 数据存储目录（可选）
 MAST_PanSTARRS/          # Pan-STARRS 数据存储目录（可选）
