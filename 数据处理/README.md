@@ -74,7 +74,7 @@ python app.py
 
 # 启动前端（新终端）
 cd frontend
-npm run dev
+quasar dev
 ```
 
 ## 使用说明
