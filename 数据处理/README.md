@@ -59,7 +59,7 @@ cd frontend
 npm install
 ```
 
-4. 创建数据存储目录（可选）：
+4. 创建数据存储目录（不选）：
 ```bash
 # 在项目根目录下创建数据存储目录
 mkdir DESI_download
@@ -73,7 +73,7 @@ mkdir MAST_PanSTARRS
 python app.py
 
 # 启动前端（新终端）
-cd frontend
+cd astro_data_portal/frontend
 quasar dev
 ```
 
