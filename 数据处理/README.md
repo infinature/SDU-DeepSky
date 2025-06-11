@@ -53,24 +53,17 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirement.txt
 ```
 
-3. 安装前端依赖：
+3. 安装安装 Quasar CLI以及前端依赖：
 ```bash
 cd frontend
+npm install -g @quasar/cli
 npm install
 ```
 
-4. 创建数据存储目录（不选）：
-```bash
-# 在项目根目录下创建数据存储目录
-mkdir DESI_download
-mkdir J-PLUS
-mkdir MAST_PanSTARRS
-```
-
-5. 启动应用：
+4. 启动应用：
 ```bash
 # 启动后端
-python app.py
+python astro_data_portal/backend/app.py
 
 # 启动前端（新终端）
 cd astro_data_portal/frontend
